@@ -1,0 +1,15 @@
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/bin/Debug/net5.0/Logic.deps.json
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/bin/Debug/net5.0/Logic.runtimeconfig.json
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/bin/Debug/net5.0/Logic.runtimeconfig.dev.json
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/bin/Debug/net5.0/Logic.dll
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/bin/Debug/net5.0/ref/Logic.dll
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/bin/Debug/net5.0/Logic.pdb
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.csprojAssemblyReference.cache
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.AssemblyInfoInputs.cache
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.AssemblyInfo.cs
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.csproj.CoreCompileInputs.cache
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.dll
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/ref/Logic.dll
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.pdb
+/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/Debug/net5.0/Logic.genruntimeconfig.cache
