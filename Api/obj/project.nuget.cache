@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "X4ssqpSmvgdJzgc0xf+EDR8EYGjxL2hsBXAlJiDKd7msuEKj4rcFtl/dqXgoVv2YVI91BdKfbs7u1mqmVTrPcg==",
+  "dgSpecHash": "h4+U+VgarE7yMmuVPgahlO3OAkzIqNdp4Gni7QFWm/Iwk8ZmxgjkG6L52193sX7HYQlJY9XJR7YLapFzASAbVg==",
   "success": true,
-  "projectFilePath": "/Users/ahmet.ata/RiderProjects/Movieproject/Api/Api.csproj",
+  "projectFilePath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Api/Api.csproj",
   "expectedPackageFiles": [
     "/Users/ahmet.ata/.nuget/packages/csharpfunctionalextensions/2.15.2/csharpfunctionalextensions.2.15.2.nupkg.sha512",
     "/Users/ahmet.ata/.nuget/packages/microsoft.aspnetcore/2.2.0/microsoft.aspnetcore.2.2.0.nupkg.sha512",

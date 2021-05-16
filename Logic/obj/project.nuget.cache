@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dwXD0+2WXdXYn45PejLQlFglasXuvkjPAuHXJthBIUkX9s+D/LPH6QqnPUlFgp36aByi9C+ciKwzW1FQ7h8Vfw==",
+  "dgSpecHash": "wjFQkvELk65jf9GIL0LE+TSIYX+ZezimspVecOena7EK7qirzdZd6uUmUaI/7tip5ePaL3eZobz3mMzFaJVNmw==",
   "success": true,
-  "projectFilePath": "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj",
+  "projectFilePath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj",
   "expectedPackageFiles": [
     "/Users/ahmet.ata/.nuget/packages/csharpfunctionalextensions/2.15.2/csharpfunctionalextensions.2.15.2.nupkg.sha512",
     "/Users/ahmet.ata/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",

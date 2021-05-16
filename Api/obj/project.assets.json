@@ -10645,11 +10645,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ahmet.ata/RiderProjects/Movieproject/Api/Api.csproj",
+      "projectUniqueName": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Api/Api.csproj",
       "projectName": "Api",
-      "projectPath": "/Users/ahmet.ata/RiderProjects/Movieproject/Api/Api.csproj",
+      "projectPath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Api/Api.csproj",
       "packagesPath": "/Users/ahmet.ata/.nuget/packages/",
-      "outputPath": "/Users/ahmet.ata/RiderProjects/Movieproject/Api/obj/",
+      "outputPath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Api/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -10667,8 +10667,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj": {
-              "projectPath": "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj"
+            "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj": {
+              "projectPath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj": {}
+    "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj": {}
   },
   "projects": {
-    "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj": {
+    "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj",
+        "projectUniqueName": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj",
         "projectName": "Logic",
-        "projectPath": "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/Logic.csproj",
+        "projectPath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/Logic.csproj",
         "packagesPath": "/Users/ahmet.ata/.nuget/packages/",
-        "outputPath": "/Users/ahmet.ata/RiderProjects/Movieproject/Logic/obj/",
+        "outputPath": "/Users/ahmet.ata/Desktop/codes/code-examples/cqrs-movie-project/Logic/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
