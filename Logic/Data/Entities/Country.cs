@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Logic.Data.Entities
 {
-    public class Type
+    public class Country
     {
         [Key]
         public int Id { get; set; }
