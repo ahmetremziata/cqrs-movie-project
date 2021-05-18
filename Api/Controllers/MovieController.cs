@@ -173,6 +173,18 @@ namespace Api.Controllers
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
+        
+        [HttpPut("deactivate/{movieId}")]
+        public async Task<IActionResult> DeactivateMovie(int movieId)
+        {
+            var command = new DeactivateMovieCommand()
+            {
+                MovieId = movieId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
 
         private MovieDto ConvertToDto(Movie movie)
         {
