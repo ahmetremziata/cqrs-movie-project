@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Api.Infrastructures.Extensions;
 using Api.Utils;
 using Logic.AppServices;
 using Logic.AppServices.Commands;
@@ -43,13 +44,13 @@ namespace Api
             services.AddEntityFrameworkNpgsql().AddDbContext<MovieDataContext>(optionsBuilder =>
                 optionsBuilder.UseNpgsql(Configuration.GetConnectionString("MovieConnection")),
                 ServiceLifetime.Singleton);
-            services.AddSwaggerDocument();
+            services.AddSwaggerDocumentation("Movie API", "v1.0");
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
+            app.UseSwagger();
+            app.UseSwaggerDocumentation("Movie API", "v1.0");
             app.UseMiddleware<ExceptionHandler>();
             app.UseMvc();
         }
