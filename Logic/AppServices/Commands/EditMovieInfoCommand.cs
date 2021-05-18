@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Logic.Dtos;
 
-namespace Logic.AppServices
+namespace Logic.AppServices.Commands
 {
     public sealed class EditMovieInfoCommand : ICommand
     {
@@ -12,5 +14,11 @@ namespace Logic.AppServices
         public int TotalMinute { get; set; }
         public string PosterUrl { get; set; }
         public DateTime? VisionEntryDate { get; set; }
+        
+        public List<MoviePersonDto> MoviePersons { get; set; }
+        
+        public List<int> CountryIds { get; set; }
+        
+        public List<int> TypeIds { get; set; }
     }
 }

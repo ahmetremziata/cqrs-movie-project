@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using Logic.AppServices.Commands;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,7 @@ namespace Logic.AppServices.Handlers
 
             if (existingMovie != null)
             {
-                return Result.Failure($"Movie already found for Name: {command.Name} OriginalName: {command.OriginalName} ConstructionYear: {command.ConstructionYear} ");
+                return Result.Failure($"Movie already found for Name: {command.Name} OriginalName: {command.OriginalName} ConstructionYear: {command.ConstructionYear}");
             }
                 
             Movie movie = new Movie
@@ -39,14 +40,7 @@ namespace Logic.AppServices.Handlers
                 CreatedOn = DateTime.Now
             };
             
-            var newMovie = await _dataContext.Movies.AddAsync(movie);
-
-            foreach (var typeId in command.TypeIds)
-            {
-                MovieType movieType = new MovieType {MovieId = newMovie.Entity.Id, TypeId = typeId};
-                await _dataContext.MovieTypes.AddAsync(movieType);
-            }
-            
+            await _dataContext.Movies.AddAsync(movie);
             await _dataContext.SaveChangesAsync();
             return Result.Success();
         }

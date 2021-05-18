@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Api.Utils;
 using Logic.AppServices;
+using Logic.AppServices.Commands;
 using Logic.AppServices.Handlers;
 using Logic.Data.DataContexts;
 using Logic.Data.Repositories;
@@ -29,6 +30,7 @@ namespace Api
             services.AddTransient<ICommandHandler<EditMovieInfoCommand>, EditMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeleteMovieCommand>, DeleteMovieCommandHandler>();
+            services.AddTransient<ICommandHandler<UpsertPersonToMovieCommand>, UpsertPersonToMovieCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieDto>>, GetMovieListQueryHandler>();
             services.AddSingleton<Messages>();
 

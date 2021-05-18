@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.AppServices;
+using Logic.AppServices.Commands;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Data.Repositories.Interfaces;
@@ -118,6 +119,19 @@ namespace Api.Controllers
         public async Task<IActionResult> DeleteMovie(int id)
         {
             var command = new DeleteMovieCommand() {Id = id};
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+        
+        [HttpPost("upsert-person/{movieId}")]
+        public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieDto dto)
+        {
+            var command = new UpsertPersonToMovieCommand()
+            {
+                MovieId = movieId,
+                MoviePersons = dto.MoviePersons
+            };
+            
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
         }

@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using Logic.AppServices.Commands;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logic.AppServices
+namespace Logic.AppServices.Handlers
 {
     public sealed class EditMovieInfoCommandHandler : ICommandHandler<EditMovieInfoCommand>
     {

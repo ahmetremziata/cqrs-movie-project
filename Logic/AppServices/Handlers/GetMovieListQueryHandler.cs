@@ -6,7 +6,7 @@ using Logic.Data.Entities;
 using Logic.Dtos;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logic.AppServices
+namespace Logic.AppServices.Handlers
 {
     public sealed class GetMovieListQueryHandler : IQueryHandler<GetMovieListQuery, List<MovieDto>>
     {

@@ -1,4 +1,4 @@
-namespace Logic.AppServices
+namespace Logic.AppServices.Commands
 {
     public sealed class DeleteMovieCommand : ICommand
     {
