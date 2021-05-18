@@ -1,18 +1,24 @@
 using System.Collections.Generic;
+using System.Net;
 using Api.Infrastructures.Extensions;
 using Api.Utils;
+using Confluent.Kafka;
 using Logic.AppServices;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Handlers;
+using Logic.Business.Service.Kafka;
+using Logic.Business.Service.Kafka.Interfaces;
 using Logic.Data.DataContexts;
 using Logic.Data.Repositories;
 using Logic.Data.Repositories.Interfaces;
 using Logic.Dtos;
 using Logic.Utils;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Api
 {
@@ -38,7 +44,8 @@ namespace Api
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieDto>>, GetMovieListQueryHandler>();
             services.AddSingleton<Messages>();
-
+            services.AddTransient<IProducerService, ProducerService>();
+            
             services.AddMvc().AddMvcOptions(o =>
             { 
                 o.EnableEndpointRouting = false;
@@ -47,9 +54,16 @@ namespace Api
                 optionsBuilder.UseNpgsql(Configuration.GetConnectionString("MovieConnection")),
                 ServiceLifetime.Singleton);
             services.AddSwaggerDocumentation("Movie API", "v1.0");
+            
+            var kafkaProducerConfig = new ProducerConfig
+            {
+                BootstrapServers = Configuration["KafkaBootstrapServers"],
+                ClientId = Dns.GetHostName()
+            };
+            services.AddSingleton<ProducerConfig>(kafkaProducerConfig);
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseSwagger();
             app.UseSwaggerDocumentation("Movie API", "v1.0");
