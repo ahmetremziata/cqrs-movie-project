@@ -19,6 +19,8 @@ namespace Logic.Data.Mappings
             builder.Property(r => r.PosterUrl).HasColumnName("poster_url");
             builder.Property(r => r.VisionEntryDate).HasColumnName("vision_entry_date");
             builder.Property(r => r.CreatedOn).HasColumnName("created_on");
+            builder.Property(r => r.IsActive).HasColumnName("is_active");
+
         }
     }
 }

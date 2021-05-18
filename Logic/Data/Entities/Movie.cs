@@ -16,5 +16,6 @@ namespace Logic.Data.Entities
         public string PosterUrl { get; set; }
         public DateTime? VisionEntryDate { get; set; }
         public DateTime CreatedOn { get; set; }
+        public bool IsActive { get; set; }
     }
 }
