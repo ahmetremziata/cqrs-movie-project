@@ -14,6 +14,7 @@ namespace Logic.Data.Mappings
             builder.Property(r => r.MovieId).HasColumnName("movie_id");
             builder.Property(r => r.PersonId).HasColumnName("person_id");
             builder.Property(r => r.RoleId).HasColumnName("role_id");
+            builder.Property(r => r.CharacterName).HasColumnName("character_name");
         }
     }
 }
