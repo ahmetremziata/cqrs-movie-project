@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Handlers
 {
-    public sealed class UpsertPersonToMovieCommandHandler : ICommandHandler<UpsertPersonToMovieCommand>
+    public sealed class UpsertTypeToMovieCommandHandler : ICommandHandler<UpsertTypeToMovieCommand>
     {
         private readonly MovieDataContext _dataContext;
 
-        public UpsertPersonToMovieCommandHandler(MovieDataContext dataContext)
+        public UpsertTypeToMovieCommandHandler(MovieDataContext dataContext)
         {
             _dataContext = dataContext;
         }
         
-        public async Task<Result> Handle(UpsertPersonToMovieCommand command)
+        public async Task<Result> Handle(UpsertTypeToMovieCommand command)
         {
             //TODO: Validation for control distinct!
             Movie movie =  await _dataContext.Movies.FirstOrDefaultAsync(item => item.Id == command.MovieId);
@@ -27,19 +27,19 @@ namespace Logic.AppServices.Handlers
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
 
-            List<MoviePerson> moviePersons =
-                await _dataContext.MoviePersons.Where(item => item.MovieId == movie.Id).ToListAsync();
+            List<MovieType> movieTypes =
+                await _dataContext.MovieTypes.Where(item => item.MovieId == movie.Id).ToListAsync();
 
             //Delete all list first!
-            foreach (var moviePerson in moviePersons)
+            foreach (var movieType in movieTypes)
             {
-                _dataContext.MoviePersons.Remove(moviePerson);
+                _dataContext.MovieTypes.Remove(movieType);
             }
             
-            foreach (var moviePerson in command.MoviePersons)
+            foreach (var typeId in command.TypeIds)
             {
-                MoviePerson moviePersonEntity = new MoviePerson() {MovieId = movie.Id, RoleId = moviePerson.RoleId, PersonId = moviePerson.PersonId};
-                await _dataContext.MoviePersons.AddAsync(moviePersonEntity);
+                MovieType movieType = new MovieType() {MovieId = movie.Id, TypeId = typeId};
+                await _dataContext.MovieTypes.AddAsync(movieType);
             }
             
             await _dataContext.SaveChangesAsync();

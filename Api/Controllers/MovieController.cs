@@ -123,13 +123,39 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
-        [HttpPost("upsert-person/{movieId}")]
+        [HttpPut("upsert-person/{movieId}")]
         public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieDto dto)
         {
             var command = new UpsertPersonToMovieCommand()
             {
                 MovieId = movieId,
                 MoviePersons = dto.MoviePersons
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+        
+        [HttpPut("upsert-country/{movieId}")]
+        public async Task<IActionResult> UpsertCountryToMovie(int movieId, [FromBody] UpsertCountryToMovieDto dto)
+        {
+            var command = new UpsertCountryToMovieCommand()
+            {
+                MovieId = movieId,
+                CountryIds = dto.CountryIds
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+        
+        [HttpPut("upsert-type/{movieId}")]
+        public async Task<IActionResult> UpsertTypeToMovie(int movieId, [FromBody] UpsertTypeToMovieDto dto)
+        {
+            var command = new UpsertTypeToMovieCommand()
+            {
+                MovieId = movieId,
+                TypeIds = dto.TypeIds
             };
             
             Result result = await _messages.Dispatch(command);

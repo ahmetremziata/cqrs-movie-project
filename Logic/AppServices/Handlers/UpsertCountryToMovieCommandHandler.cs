@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Handlers
 {
-    public sealed class UpsertPersonToMovieCommandHandler : ICommandHandler<UpsertPersonToMovieCommand>
+    public sealed class UpsertCountryToMovieCommandHandler : ICommandHandler<UpsertCountryToMovieCommand>
     {
         private readonly MovieDataContext _dataContext;
 
-        public UpsertPersonToMovieCommandHandler(MovieDataContext dataContext)
+        public UpsertCountryToMovieCommandHandler(MovieDataContext dataContext)
         {
             _dataContext = dataContext;
         }
         
-        public async Task<Result> Handle(UpsertPersonToMovieCommand command)
+        public async Task<Result> Handle(UpsertCountryToMovieCommand command)
         {
             //TODO: Validation for control distinct!
             Movie movie =  await _dataContext.Movies.FirstOrDefaultAsync(item => item.Id == command.MovieId);
@@ -27,19 +27,19 @@ namespace Logic.AppServices.Handlers
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
 
-            List<MoviePerson> moviePersons =
-                await _dataContext.MoviePersons.Where(item => item.MovieId == movie.Id).ToListAsync();
+            List<MovieCountry> movieCountries =
+                await _dataContext.MovieCountries.Where(item => item.MovieId == movie.Id).ToListAsync();
 
             //Delete all list first!
-            foreach (var moviePerson in moviePersons)
+            foreach (var movieCountry in movieCountries)
             {
-                _dataContext.MoviePersons.Remove(moviePerson);
+                _dataContext.MovieCountries.Remove(movieCountry);
             }
             
-            foreach (var moviePerson in command.MoviePersons)
+            foreach (var countryId in command.CountryIds)
             {
-                MoviePerson moviePersonEntity = new MoviePerson() {MovieId = movie.Id, RoleId = moviePerson.RoleId, PersonId = moviePerson.PersonId};
-                await _dataContext.MoviePersons.AddAsync(moviePersonEntity);
+                MovieCountry movieCountry = new MovieCountry() {MovieId = movie.Id, CountryId = countryId};
+                await _dataContext.MovieCountries.AddAsync(movieCountry);
             }
             
             await _dataContext.SaveChangesAsync();
