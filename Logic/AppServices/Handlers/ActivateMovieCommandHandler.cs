@@ -91,7 +91,7 @@ namespace Logic.AppServices.Handlers
 
             foreach (var moviePerson in moviePersons.Where(item => item.RoleId == roleId))
             {
-                var person = await _dataContext.Persons.SingleAsync(item => item.Id == moviePerson.Id);
+                var person = await _dataContext.Persons.SingleAsync(item => item.Id == moviePerson.PersonId);
                 Actor actor = new Actor {
                     Id = person.Id,
                     Name = person.Name,
