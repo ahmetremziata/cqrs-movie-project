@@ -7,7 +7,6 @@ using Logic.AppServices;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Handlers;
 using Logic.Business.Service.Kafka;
-using Logic.Business.Service.Kafka.Handlers;
 using Logic.Business.Service.Kafka.Interfaces;
 using Logic.Data.DataContexts;
 using Logic.Data.Repositories;
@@ -18,7 +17,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
@@ -64,7 +62,7 @@ namespace Api
             };
             
             services.AddSingleton<ProducerConfig>(kafkaProducerConfig);
-            services.AddSingleton<IHostedService, KafkaConsumerHandler>();
+            services.AddElasticsearch(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
