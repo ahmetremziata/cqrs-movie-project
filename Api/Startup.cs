@@ -12,6 +12,7 @@ using Logic.Data.DataContexts;
 using Logic.Data.Repositories;
 using Logic.Data.Repositories.Interfaces;
 using Logic.Dtos;
+using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,7 @@ namespace Api
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieDto>>, GetMovieListQueryHandler>();
+            services.AddTransient<IQueryHandler<GetMoviePresentationListQuery, MoviePresentationResponse>, GetMoviePresentationListQueryHandler>();
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             

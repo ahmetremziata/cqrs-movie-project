@@ -19,7 +19,7 @@ namespace Api.Infrastructures.Extensions
   
             var client = new ElasticClient(settings);
   
-            services.AddSingleton(client);
+            services.AddSingleton<IElasticClient>(client);
   
             CreateIndex(client, defaultIndex);
         }
