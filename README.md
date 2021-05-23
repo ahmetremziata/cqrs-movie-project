@@ -1,2 +1,11 @@
 # cqrs-movie-project
-An example for cqrs and event sourcing
+An api example for cqrs and event sourcing
+
+## Dependencies
+Postgre 
+Kafka
+ElasticSearch
+
+## Usage
+
+
