@@ -28,7 +28,7 @@ namespace Api.Infrastructures.Extensions
         {
             settings.
             DefaultMappingFor<Logic.Indexes.Movie>(m => m
-                .Ignore(p => p.PosterUrl)
+                .PropertyName(p => p.PosterUrl, "posterUrl")
             );
         }
   
