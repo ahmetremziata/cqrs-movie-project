@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using Logic.AppServices.Commands;
 
-namespace Logic.AppServices.Handlers
+namespace Logic.AppServices.Commands.Handlers
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Logic.Responses;
 using Nest;
 
-namespace Logic.AppServices.Handlers
+namespace Logic.AppServices.Queries.Handlers
 {
     public sealed class GetMoviePresentationListQueryHandler : IQueryHandler<GetMoviePresentationListQuery, MoviePresentationResponse>
     {

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using Logic.AppServices.Commands;
 using Logic.Business.Service.Kafka.Interfaces;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Logic.AppServices.Handlers
+namespace Logic.AppServices.Commands.Handlers
 {
     public sealed class ActivateMovieCommandHandler : ICommandHandler<ActivateMovieCommand>
     {

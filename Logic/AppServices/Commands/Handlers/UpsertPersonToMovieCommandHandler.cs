@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using Logic.AppServices.Commands;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logic.AppServices.Handlers
+namespace Logic.AppServices.Commands.Handlers
 {
     public sealed class UpsertPersonToMovieCommandHandler : ICommandHandler<UpsertPersonToMovieCommand>
     {

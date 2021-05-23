@@ -2,23 +2,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using Logic.AppServices.Commands;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logic.AppServices.Handlers
+namespace Logic.AppServices.Commands.Handlers
 {
-    public sealed class UpsertTypeToMovieCommandHandler : ICommandHandler<UpsertTypeToMovieCommand>
+    public sealed class UpsertCountryToMovieCommandHandler : ICommandHandler<UpsertCountryToMovieCommand>
     {
         private readonly MovieDataContext _dataContext;
 
-        public UpsertTypeToMovieCommandHandler(MovieDataContext dataContext)
+        public UpsertCountryToMovieCommandHandler(MovieDataContext dataContext)
         {
             _dataContext = dataContext;
         }
         
-        public async Task<Result> Handle(UpsertTypeToMovieCommand command)
+        public async Task<Result> Handle(UpsertCountryToMovieCommand command)
         {
             //TODO: Validation for control distinct!
             Movie movie =  await _dataContext.Movies.FirstOrDefaultAsync(item => item.Id == command.MovieId);
@@ -27,19 +26,19 @@ namespace Logic.AppServices.Handlers
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
 
-            List<MovieType> movieTypes =
-                await _dataContext.MovieTypes.Where(item => item.MovieId == movie.Id).ToListAsync();
+            List<MovieCountry> movieCountries =
+                await _dataContext.MovieCountries.Where(item => item.MovieId == movie.Id).ToListAsync();
 
             //Delete all list first!
-            foreach (var movieType in movieTypes)
+            foreach (var movieCountry in movieCountries)
             {
-                _dataContext.MovieTypes.Remove(movieType);
+                _dataContext.MovieCountries.Remove(movieCountry);
             }
             
-            foreach (var typeId in command.TypeIds)
+            foreach (var countryId in command.CountryIds)
             {
-                MovieType movieType = new MovieType() {MovieId = movie.Id, TypeId = typeId};
-                await _dataContext.MovieTypes.AddAsync(movieType);
+                MovieCountry movieCountry = new MovieCountry() {MovieId = movie.Id, CountryId = countryId};
+                await _dataContext.MovieCountries.AddAsync(movieCountry);
             }
             
             await _dataContext.SaveChangesAsync();

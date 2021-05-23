@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Logic.AppServices.Handlers
+namespace Logic.AppServices.Queries.Handlers
 {
     public interface IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
     {

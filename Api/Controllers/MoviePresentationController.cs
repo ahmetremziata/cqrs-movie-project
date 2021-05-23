@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Logic.AppServices;
 using Logic.Requests;
+using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,7 +21,7 @@ namespace Api.Controllers
             _messages = messages;
         }
         
-        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(List<String>))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(MoviePresentationResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpGet]
         public async  Task<IActionResult> GetMovies([FromQuery] SearchMovieRequest request)
@@ -37,19 +38,13 @@ namespace Api.Controllers
             return Ok(list);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Logic.Indexes.Movie))]
         [HttpGet("{movieId}")]
         public async  Task<IActionResult> GetMovieById(int movieId)
         {
             #region "New Code"
             var list = await _messages.Dispatch(new GetMovieListQuery());
             return Ok(list);
-            #endregion
-
-            #region "Old Code"
-            /*
-            IReadOnlyList<Movie> movies = await _movieRepository.GetMovies();
-            List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
-            return Ok(dtos); */
             #endregion
         }
     }
