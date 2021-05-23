@@ -6,6 +6,7 @@ using Confluent.Kafka;
 using Logic.AppServices;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Commands.Handlers;
+using Logic.AppServices.Queries;
 using Logic.AppServices.Queries.Handlers;
 using Logic.Business.Service.Kafka;
 using Logic.Business.Service.Kafka.Interfaces;
@@ -46,6 +47,7 @@ namespace Api
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieDto>>, GetMovieListQueryHandler>();
             services.AddTransient<IQueryHandler<GetMoviePresentationListQuery, MoviePresentationResponse>, GetMoviePresentationListQueryHandler>();
+            services.AddTransient<IQueryHandler<GetMoviePresentationQuery, Logic.Indexes.Movie>, GetMoviePresentationQueryHandler>();
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             

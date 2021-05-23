@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using Logic.Dtos;
 using Logic.Responses;
 
-namespace Logic.AppServices
+namespace Logic.AppServices.Queries
 {
     public sealed class GetMoviePresentationListQuery : IQuery<MoviePresentationResponse>
     {

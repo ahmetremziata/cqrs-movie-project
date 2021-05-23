@@ -4,6 +4,7 @@ using CSharpFunctionalExtensions;
 using Logic.AppServices;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Commands.Handlers;
+using Logic.AppServices.Queries;
 using Logic.AppServices.Queries.Handlers;
 
 namespace Logic.Utils

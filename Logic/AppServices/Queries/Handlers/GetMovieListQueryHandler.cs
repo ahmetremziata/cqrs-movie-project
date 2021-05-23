@@ -17,7 +17,7 @@ namespace Logic.AppServices.Queries.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<List<MovieDto>> Handle(GetMovieListQuery command)
+        public async Task<List<MovieDto>> Handle(GetMovieListQuery query)
         {
             IReadOnlyList<Movie> movies = await _dataContext.Movies.ToListAsync();
             List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
