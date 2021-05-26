@@ -51,6 +51,14 @@ namespace Api
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             
+            services.AddCors(
+                o => o.AddPolicy("AllAcceptedPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }));
+            
             services.AddMvc().AddMvcOptions(o =>
             { 
                 o.EnableEndpointRouting = false;
@@ -72,6 +80,7 @@ namespace Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCors("AllAcceptedPolicy");
             app.UseSwagger();
             app.UseSwaggerDocumentation("Movie API", "v1.0");
             app.UseMiddleware<ExceptionHandler>();
