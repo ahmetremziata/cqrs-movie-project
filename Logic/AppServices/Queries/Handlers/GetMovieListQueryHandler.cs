@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
-using Logic.Dtos;
+using Logic.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Queries.Handlers
 {
-    public sealed class GetMovieListQueryHandler : IQueryHandler<GetMovieListQuery, List<MovieDto>>
+    public sealed class GetMovieListQueryHandler : IQueryHandler<GetMovieListQuery, List<MovieResponse>>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -17,16 +17,16 @@ namespace Logic.AppServices.Queries.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<List<MovieDto>> Handle(GetMovieListQuery query)
+        public async Task<List<MovieResponse>> Handle(GetMovieListQuery query)
         {
             IReadOnlyList<Movie> movies = await _dataContext.Movies.ToListAsync();
-            List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
+            List<MovieResponse> dtos = movies.Select(x => ConvertToDto(x)).ToList();
             return dtos;
         }
         
-        private MovieDto ConvertToDto(Movie movie)
+        private MovieResponse ConvertToDto(Movie movie)
         {
-            return new MovieDto
+            return new MovieResponse
             {
                 Id = movie.Id,
                 Name = movie.Name,

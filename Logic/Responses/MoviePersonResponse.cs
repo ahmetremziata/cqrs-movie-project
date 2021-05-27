@@ -1,6 +1,6 @@
-namespace Logic.Dtos
+namespace Logic.Responses
 {
-    public class MoviePersonDto
+    public class MoviePersonResponse
     {
         public int PersonId { get; set; }
         public int RoleId { get; set; }

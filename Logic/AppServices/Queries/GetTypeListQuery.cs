@@ -3,7 +3,7 @@ using Logic.Responses;
 
 namespace Logic.AppServices.Queries
 {
-    public sealed class GetMovieListQuery : IQuery<List<MovieResponse>>
+    public sealed class GetTypeListQuery : IQuery<List<TypeResponse>>
     {
     }
 }

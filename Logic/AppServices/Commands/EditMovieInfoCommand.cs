@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Logic.Dtos;
+using Logic.Responses;
 
 namespace Logic.AppServices.Commands
 {
@@ -15,7 +15,7 @@ namespace Logic.AppServices.Commands
         public string PosterUrl { get; set; }
         public DateTime? VisionEntryDate { get; set; }
         
-        public List<MoviePersonDto> MoviePersons { get; set; }
+        public List<MoviePersonResponse> MoviePersons { get; set; }
         
         public List<int> CountryIds { get; set; }
         

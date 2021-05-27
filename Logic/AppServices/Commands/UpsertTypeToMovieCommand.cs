@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Logic.Dtos;
 
 namespace Logic.AppServices.Commands
 {

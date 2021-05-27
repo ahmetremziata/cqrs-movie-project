@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 
-namespace Logic.Dtos
+namespace Logic.Responses
 {
-    public class InsertMovieInfoDto
+    public class InsertMovieInfoResponse
     {
         public string Name { get; set; }
         public string OriginalName { get; set; }

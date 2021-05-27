@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Logic.Dtos
+namespace Logic.Responses
 {
-    public class UpsertTypeToMovieDto
+    public class UpsertTypeToMovieResponse
     {
         public List<int> TypeIds { get; set; }
     }

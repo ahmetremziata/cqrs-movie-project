@@ -1,8 +1,8 @@
 using System;
 
-namespace Logic.Dtos
+namespace Logic.Responses
 {
-    public class MovieDto   
+    public class MovieResponse   
     {
         public int Id { get; set; }
         public string Name { get; set; }

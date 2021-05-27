@@ -6,7 +6,7 @@ using Logic.AppServices.Queries;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Data.Repositories.Interfaces;
-using Logic.Dtos;
+using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,17 +43,17 @@ namespace Api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> InsertMovie( [FromBody] InsertMovieInfoDto infoDto)
+        public async Task<IActionResult> InsertMovie( [FromBody] InsertMovieInfoResponse infoResponse)
         {
             var command = new InsertMovieInfoCommand()
             {
-                Name = infoDto.Name,
-                OriginalName = infoDto.OriginalName,
-                ConstructionYear = infoDto.ConstructionYear,
-                Description = infoDto.Description,
-                PosterUrl = infoDto.PosterUrl,
-                TotalMinute = infoDto.TotalMinute,
-                VisionEntryDate = infoDto.VisionEntryDate
+                Name = infoResponse.Name,
+                OriginalName = infoResponse.OriginalName,
+                ConstructionYear = infoResponse.ConstructionYear,
+                Description = infoResponse.Description,
+                PosterUrl = infoResponse.PosterUrl,
+                TotalMinute = infoResponse.TotalMinute,
+                VisionEntryDate = infoResponse.VisionEntryDate
             };
             
             Result result = await _messages.Dispatch(command);
@@ -61,18 +61,18 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditMovie(int id, [FromBody] EditMovieInfoDto infoDto)
+        public async Task<IActionResult> EditMovie(int id, [FromBody] EditMovieInfoResponse infoResponse)
         {
             #region "With messages"
             var command = new EditMovieInfoCommand()
             {
-                Name = infoDto.Name,
-                OriginalName = infoDto.OriginalName,
-                ConstructionYear = infoDto.ConstructionYear,
-                Description = infoDto.Description,
-                PosterUrl = infoDto.PosterUrl,
-                TotalMinute = infoDto.TotalMinute,
-                VisionEntryDate = infoDto.VisionEntryDate,
+                Name = infoResponse.Name,
+                OriginalName = infoResponse.OriginalName,
+                ConstructionYear = infoResponse.ConstructionYear,
+                Description = infoResponse.Description,
+                PosterUrl = infoResponse.PosterUrl,
+                TotalMinute = infoResponse.TotalMinute,
+                VisionEntryDate = infoResponse.VisionEntryDate,
                 Id = id
                 
             };
@@ -125,12 +125,12 @@ namespace Api.Controllers
         }
         
         [HttpPut("upsert-person/{movieId}")]
-        public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieDto dto)
+        public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieResponse response)
         {
             var command = new UpsertPersonToMovieCommand()
             {
                 MovieId = movieId,
-                MoviePersons = dto.MoviePersons
+                MoviePersons = response.MoviePersons
             };
             
             Result result = await _messages.Dispatch(command);
@@ -138,12 +138,12 @@ namespace Api.Controllers
         }
         
         [HttpPut("upsert-country/{movieId}")]
-        public async Task<IActionResult> UpsertCountryToMovie(int movieId, [FromBody] UpsertCountryToMovieDto dto)
+        public async Task<IActionResult> UpsertCountryToMovie(int movieId, [FromBody] UpsertCountryToMovieResponse response)
         {
             var command = new UpsertCountryToMovieCommand()
             {
                 MovieId = movieId,
-                CountryIds = dto.CountryIds
+                CountryIds = response.CountryIds
             };
             
             Result result = await _messages.Dispatch(command);
@@ -151,12 +151,12 @@ namespace Api.Controllers
         }
         
         [HttpPut("upsert-type/{movieId}")]
-        public async Task<IActionResult> UpsertTypeToMovie(int movieId, [FromBody] UpsertTypeToMovieDto dto)
+        public async Task<IActionResult> UpsertTypeToMovie(int movieId, [FromBody] UpsertTypeToMovieResponse response)
         {
             var command = new UpsertTypeToMovieCommand()
             {
                 MovieId = movieId,
-                TypeIds = dto.TypeIds
+                TypeIds = response.TypeIds
             };
             
             Result result = await _messages.Dispatch(command);
@@ -187,9 +187,9 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
-        private MovieDto ConvertToDto(Movie movie)
+        private MovieResponse ConvertToDto(Movie movie)
         {
-            return new MovieDto
+            return new MovieResponse
             {
                 Id = movie.Id,
                 Name = movie.Name,
