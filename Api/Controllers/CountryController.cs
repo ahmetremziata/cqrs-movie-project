@@ -9,32 +9,32 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
-    [Route("api/types")]
-    public sealed class TypeController : BaseController
+    [Route("api/countries")]
+    public sealed class CountryController : BaseController
     {
         private readonly Messages _messages;
 
-        public TypeController(Messages messages)
+        public CountryController(Messages messages)
         {
             _messages = messages;
         }
 
-        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(List<TypeResponse>))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(List<CountryResponse>))]
         [HttpGet]
-        public async  Task<IActionResult> GetTypes()
+        public async  Task<IActionResult> GetCountries()
         {
-            var list = await _messages.Dispatch(new GetTypeListQuery());
+            var list = await _messages.Dispatch(new GetCountryListQuery());
             return Ok(list);
         }
         
-        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(TypeResponse))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(CountryResponse))]
         [SwaggerResponse((int)HttpStatusCode.NotFound)]
-        [HttpGet("{typeId}")]
-        public async  Task<IActionResult> GetTypeById(int typeId)
+        [HttpGet("{countryId}")]
+        public async  Task<IActionResult> GetCountryById(int countryId)
         {
-            var response = await _messages.Dispatch(new GetTypeByIdQuery()
+            var response = await _messages.Dispatch(new GetCountryByIdQuery()
             {
-                TypeId = typeId
+                CountryId = countryId
             });
 
             if (response == null)

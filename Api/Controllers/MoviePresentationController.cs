@@ -23,7 +23,6 @@ namespace Api.Controllers
         }
         
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(MoviePresentationResponse))]
-        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpGet]
         public async  Task<IActionResult> GetMovies([FromQuery] SearchMovieRequest request)
         {

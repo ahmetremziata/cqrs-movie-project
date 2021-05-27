@@ -48,6 +48,9 @@ namespace Api
             services.AddTransient<IQueryHandler<GetMoviePresentationListQuery, MoviePresentationResponse>, GetMoviePresentationListQueryHandler>();
             services.AddTransient<IQueryHandler<GetMoviePresentationQuery, Logic.Indexes.Movie>, GetMoviePresentationQueryHandler>();
             services.AddTransient<IQueryHandler<GetTypeListQuery, List<TypeResponse>>, GetTypeListQueryHandler>();
+            services.AddTransient<IQueryHandler<GetTypeByIdQuery, TypeResponse>, GetTypeByIdQueryHandler>();
+            services.AddTransient<IQueryHandler<GetCountryListQuery, List<CountryResponse>>, GetCountryListQueryHandler>();
+            services.AddTransient<IQueryHandler<GetCountryByIdQuery, CountryResponse>, GetCountryByIdQueryHandler>();
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             
