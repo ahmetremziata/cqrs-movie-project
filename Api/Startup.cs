@@ -37,9 +37,9 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IMovieRepository, MovieRepository>();
-            services.AddTransient<ICommandHandler<EditMovieInfoCommand>>(provider =>
+            /*services.AddTransient<ICommandHandler<EditMovieInfoCommand>>(provider =>
                 new AuditLoggingDecorator<EditMovieInfoCommand>
-                    (new EditMovieInfoCommandHandler(provider.GetService<MovieDataContext>())));
+                    (new EditMovieInfoCommandHandler(provider.GetService<MovieDataContext>())));*/
             services.AddTransient<ICommandHandler<EditMovieInfoCommand>, EditMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeleteMovieCommand>>(provider =>

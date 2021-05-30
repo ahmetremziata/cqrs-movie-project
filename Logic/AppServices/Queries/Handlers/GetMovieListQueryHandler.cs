@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
+using Logic.Decorators;
 using Logic.Responses;
 using Microsoft.EntityFrameworkCore;
 

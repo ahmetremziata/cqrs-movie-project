@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
+using Logic.Decorators;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Commands.Handlers
