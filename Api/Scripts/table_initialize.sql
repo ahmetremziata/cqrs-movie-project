@@ -336,7 +336,7 @@ insert into movie_countries(movie_id, country_id) values(3, 2);
 insert into movie_countries(movie_id, country_id) values(4, 2);
 insert into movie_countries(movie_id, country_id) values(5, 2);
 insert into movie_countries(movie_id, country_id) values(6, 1);
-insert into movie_countries(movie_id, country_id) values(7, 1);
+insert into movie_countries(movie_id, country_id) values(7, 2);
 
 --insert movie_persons
 insert into movie_persons(movie_id, person_id, character_name, role_id) VALUES
