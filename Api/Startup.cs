@@ -13,6 +13,7 @@ using Logic.Business.Service.Kafka.Interfaces;
 using Logic.Data.DataContexts;
 using Logic.Data.Repositories;
 using Logic.Data.Repositories.Interfaces;
+using Logic.Decorators;
 using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Builder;
@@ -36,9 +37,14 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<ICommandHandler<EditMovieInfoCommand>>(provider =>
+                new AuditLoggingDecorator<EditMovieInfoCommand>
+                    (new EditMovieInfoCommandHandler(provider.GetService<MovieDataContext>())));
             services.AddTransient<ICommandHandler<EditMovieInfoCommand>, EditMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
-            services.AddTransient<ICommandHandler<DeleteMovieCommand>, DeleteMovieCommandHandler>();
+            services.AddTransient<ICommandHandler<DeleteMovieCommand>>(provider =>
+                new AuditLoggingDecorator<DeleteMovieCommand>
+                    (new DeleteMovieCommandHandler(provider.GetService<MovieDataContext>())));
             services.AddTransient<ICommandHandler<UpsertPersonToMovieCommand>, UpsertPersonToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<UpsertCountryToMovieCommand>, UpsertCountryToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<UpsertTypeToMovieCommand>, UpsertTypeToMovieCommandHandler>();
@@ -79,6 +85,7 @@ namespace Api
             
             services.AddSingleton<ProducerConfig>(kafkaProducerConfig);
             services.AddElasticsearch(Configuration);
+            //services.AddHandlers();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
