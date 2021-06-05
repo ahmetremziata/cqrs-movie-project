@@ -57,5 +57,19 @@ namespace Api.Controllers
 
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
+
+        [SwaggerResponse((int) HttpStatusCode.OK)]
+        [SwaggerResponse((int) HttpStatusCode.NotFound)]
+        [HttpPut("{countryId}")]
+        public async Task<IActionResult> UpdateCountry(int countryId, [FromBody] string countryName)
+        {
+            var result = await _messages.Dispatch(new EditCountryInfoCommand()
+            {
+                CountryId = countryId,
+                Name = countryName
+            });
+            
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
     }
 }
