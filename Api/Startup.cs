@@ -46,6 +46,9 @@ namespace Api
                 new AuditLoggingDecorator<DeleteMovieCommand>
                     (new DeleteMovieCommandHandler(provider.GetService<MovieDataContext>())));
             services.AddTransient<ICommandHandler<UpsertPersonToMovieCommand>, UpsertPersonToMovieCommandHandler>();
+            services.AddTransient<ICommandHandler<InsertTypeInfoCommand>, InsertTypeInfoCommandHandler>();
+            services.AddTransient<ICommandHandler<EditTypeInfoCommand>, EditTypeInfoCommandHandler>();
+            services.AddTransient<ICommandHandler<DeleteTypeCommand>, DeleteTypeCommandHandler>();
             services.AddTransient<ICommandHandler<UpsertCountryToMovieCommand>, UpsertCountryToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<UpsertTypeToMovieCommand>, UpsertTypeToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();

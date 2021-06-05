@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Logic.AppServices.Commands;
 using Logic.AppServices.Queries;
 using Logic.Responses;
 using Logic.Utils;
@@ -43,6 +44,42 @@ namespace Api.Controllers
             }
             
             return Ok(response);
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [HttpPost("")]
+        public async  Task<IActionResult> InsertType([FromBody] string typeName)
+        {
+            var result = await _messages.Dispatch(new InsertTypeInfoCommand()
+            {
+                Name = typeName
+            });
+            return result.IsSuccess ? Ok() : Error(result.Error);        
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpPut("{typeId}")]
+        public async  Task<IActionResult> UpdateType(int typeId, [FromBody] string typeName)
+        {
+            var result = await _messages.Dispatch(new EditTypeInfoCommand()
+            {
+                TypeId = typeId,
+                Name = typeName
+            });
+            return result.IsSuccess ? Ok() : NotFound(result.Error);        
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpDelete("{typeId}")]
+        public async  Task<IActionResult> Delete(int typeId)
+        {
+            var result = await _messages.Dispatch(new DeleteTypeCommand()
+            {
+                TypeId = typeId
+            });
+            return result.IsSuccess ? Ok() : NotFound(result.Error);        
         }
     }
 }
