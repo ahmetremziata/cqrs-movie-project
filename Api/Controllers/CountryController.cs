@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Logic.AppServices.Commands;
 using Logic.AppServices.Queries;
 using Logic.Responses;
 using Logic.Utils;
@@ -43,6 +44,18 @@ namespace Api.Controllers
             }
             
             return Ok(response);
+        }
+
+        [SwaggerResponse((int) HttpStatusCode.OK)]
+        [HttpPost("")]
+        public async Task<IActionResult> InsertCountry([FromBody] string countryName)
+        {
+            var result = await _messages.Dispatch(new InsertCountryInfoCommand()
+            {
+                Name = countryName
+            });
+
+            return result.IsSuccess ? Ok() : Error(result.Error);
         }
     }
 }

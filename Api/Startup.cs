@@ -40,6 +40,7 @@ namespace Api
             /*services.AddTransient<ICommandHandler<EditMovieInfoCommand>>(provider =>
                 new AuditLoggingDecorator<EditMovieInfoCommand>
                     (new EditMovieInfoCommandHandler(provider.GetService<MovieDataContext>())));*/
+            services.AddTransient<ICommandHandler<InsertCountryInfoCommand>, InsertCountryInfoCommandHandler>();
             services.AddTransient<ICommandHandler<EditMovieInfoCommand>, EditMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeleteMovieCommand>>(provider =>
