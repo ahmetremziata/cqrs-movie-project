@@ -71,5 +71,17 @@ namespace Api.Controllers
             
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpDelete("{typeId}")]
+        public async  Task<IActionResult> Delete(int countryId)
+        {
+            var result = await _messages.Dispatch(new DeleteCountryCommand()
+            {
+                CountryId = countryId
+            });
+            return result.IsSuccess ? Ok() : NotFound(result.Error);        
+        }
     }
 }

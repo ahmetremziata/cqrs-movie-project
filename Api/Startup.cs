@@ -51,6 +51,7 @@ namespace Api
             services.AddTransient<ICommandHandler<EditTypeInfoCommand>, EditTypeInfoCommandHandler>();
             services.AddTransient<ICommandHandler<EditCountryInfoCommand>, EditCountryInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeleteTypeCommand>, DeleteTypeCommandHandler>();
+            services.AddTransient<ICommandHandler<DeleteCountryCommand>, DeleteCountryCommandHandler>();
             services.AddTransient<ICommandHandler<UpsertCountryToMovieCommand>, UpsertCountryToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<UpsertTypeToMovieCommand>, UpsertTypeToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();
