@@ -57,7 +57,8 @@ namespace Api
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieResponse>>, GetMovieListQueryHandler>();
-            services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdQueryHandler>();
+            //services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdQueryHandler>();
+            services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdWithSeperateDomainModelQueryHandler>();
             services.AddTransient<IQueryHandler<GetMoviePresentationListQuery, MoviePresentationResponse>, GetMoviePresentationListQueryHandler>();
             services.AddTransient<IQueryHandler<GetMoviePresentationQuery, Logic.Indexes.Movie>, GetMoviePresentationQueryHandler>();
             services.AddTransient<IQueryHandler<GetTypeListQuery, List<TypeResponse>>, GetTypeListQueryHandler>();
