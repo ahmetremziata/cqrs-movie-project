@@ -19,8 +19,8 @@ namespace Logic.AppServices.Queries.Handlers
         
         public async Task<List<CountryResponse>> Handle(GetCountryListQuery query)
         {
-            IReadOnlyList<Country> Countrys = await _dataContext.Countries.ToListAsync();
-            List<CountryResponse> dtos = Countrys.Select(x => ConvertToDto(x)).OrderBy(item => item.Id).ToList();
+            IReadOnlyList<Country> countries = await _dataContext.Countries.ToListAsync();
+            List<CountryResponse> dtos = countries.Select(x => ConvertToDto(x)).OrderBy(item => item.Id).ToList();
             return dtos;
         }
         

@@ -57,6 +57,7 @@ namespace Api
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieResponse>>, GetMovieListQueryHandler>();
+            services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetMoviePresentationListQuery, MoviePresentationResponse>, GetMoviePresentationListQueryHandler>();
             services.AddTransient<IQueryHandler<GetMoviePresentationQuery, Logic.Indexes.Movie>, GetMoviePresentationQueryHandler>();
             services.AddTransient<IQueryHandler<GetTypeListQuery, List<TypeResponse>>, GetTypeListQueryHandler>();
@@ -82,6 +83,9 @@ namespace Api
                 optionsBuilder.UseNpgsql(Configuration.GetConnectionString("MovieConnection")),
                 ServiceLifetime.Singleton);
             services.AddSwaggerDocumentation("Movie API", "v1.0");
+
+            var connectionString = new ConnectionString(Configuration.GetConnectionString("MovieConnection"));
+            services.AddSingleton(connectionString);
             
             var kafkaProducerConfig = new ProducerConfig
             {

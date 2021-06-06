@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.AppServices.Commands;
@@ -8,6 +11,7 @@ using Logic.Data.Repositories.Interfaces;
 using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -36,6 +40,33 @@ namespace Api.Controllers
             #region "Old Code"
             /*
             IReadOnlyList<Movie> movies = await _movieRepository.GetMovies();
+            List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
+            return Ok(dtos); */
+            #endregion
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(MovieDetailResponse))]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpGet("{movieId}")]
+        public async  Task<IActionResult> GetMovieById(int movieId)
+        {
+            #region "New Code"
+            var movie = await _messages.Dispatch(new GetMovieByIdQuery()
+            {
+                MovieId = movieId
+            });
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(movie);
+            #endregion
+
+            #region "Old Code"
+            
+            /*IReadOnlyList<Movie> movies = await _movieRepository.GetMovies();
             List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
             return Ok(dtos); */
             #endregion

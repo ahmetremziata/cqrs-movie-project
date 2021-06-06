@@ -17,13 +17,13 @@ namespace Logic.AppServices.Queries.Handlers
         
         public async Task<CountryResponse> Handle(GetCountryByIdQuery query)
         {
-            Country Country = await _dataContext.Countries.SingleOrDefaultAsync(item => item.Id == query.CountryId);
-            if (Country == null)
+            Country country = await _dataContext.Countries.SingleOrDefaultAsync(item => item.Id == query.CountryId);
+            if (country == null)
             {
                 return null;
             }
             
-            return ConvertToDto(Country);
+            return ConvertToDto(country);
         }
         
         private CountryResponse ConvertToDto(Country Country)
