@@ -46,6 +46,7 @@ namespace Logic.AppServices.Queries.Handlers
                 ConstructionYear = movie.ConstructionYear,
                 TotalMinute = movie.TotalMinute,
                 PosterUrl = movie.PosterUrl,
+                IsActive = movie.IsActive,
                 VisionEntryDate = movie.VisionEntryDate,
                 TotalActorCount = movieActors.Count,
                 Actors = await GetActors(movieActors),

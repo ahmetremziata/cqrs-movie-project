@@ -30,6 +30,7 @@ namespace Logic.AppServices.Queries.Handlers
                    m.construction_year,
                    m.total_minute,
                    m.poster_url,
+                   m.is_active,
                    m.vision_entry_date,
                    (select count(1) from movie_persons mp where mp.movie_id=1 and mp.role_id=1) total_actor_count,
                    c.id country_id,
@@ -78,6 +79,7 @@ namespace Logic.AppServices.Queries.Handlers
             result.TotalActorCount = firstMovie.total_actor_count;
             result.Name = firstMovie.movie_name;
             result.VisionEntryDate = firstMovie.vision_entry_date;
+            result.IsActive = firstMovie.is_active;
             result.Types = await GetTypes(movies);
             result.Countries = await GetCountries(movies);
             result.Actors = await GetActors(movies);
@@ -151,6 +153,7 @@ namespace Logic.AppServices.Queries.Handlers
             public readonly int construction_year;
             public readonly int total_minute;
             public readonly string poster_url;
+            public readonly bool is_active;
             public readonly DateTime? vision_entry_date;
             public readonly int total_actor_count;
             public readonly int country_id;
@@ -166,7 +169,7 @@ namespace Logic.AppServices.Queries.Handlers
                 
             }
 
-            public MovieInDb(int movieId, string movieName, string originalName, string description, int constructionYear, int totalMinute, string posterUrl, DateTime? visionEntryDate, int totalActorCount, int countryId, string countryName, int typeId, string typeName, int actorId, string actorName, string characterName)
+            public MovieInDb(int movieId, string movieName, string originalName, string description, int constructionYear, int totalMinute, string posterUrl, bool isActive, DateTime? visionEntryDate, int totalActorCount, int countryId, string countryName, int typeId, string typeName, int actorId, string actorName, string characterName)
             {
                 movie_id = movieId;
                 movie_name = movieName;
@@ -175,6 +178,7 @@ namespace Logic.AppServices.Queries.Handlers
                 construction_year = constructionYear;
                 total_minute = totalMinute;
                 poster_url = posterUrl;
+                is_active = isActive;
                 vision_entry_date = visionEntryDate;
                 total_actor_count = totalActorCount;
                 country_id = countryId;

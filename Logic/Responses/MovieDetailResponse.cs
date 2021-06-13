@@ -13,6 +13,7 @@ namespace Logic.Responses
         public int TotalMinute { get; set; }
         public string PosterUrl { get; set; }
         public DateTime? VisionEntryDate { get; set; }
+        public bool IsActive { get; set; }
         public int TotalActorCount { get; set; }
         public List<MovieTypeResponse> Types { get; set; }
         public List<MovieCountryResponse> Countries { get; set; }

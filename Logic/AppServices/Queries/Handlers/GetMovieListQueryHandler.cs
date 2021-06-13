@@ -32,11 +32,9 @@ namespace Logic.AppServices.Queries.Handlers
                 Id = movie.Id,
                 Name = movie.Name,
                 OriginalName = movie.OriginalName,
-                Description = movie.Description,
                 ConstructionYear = movie.ConstructionYear,
                 TotalMinute = movie.TotalMinute,
-                PosterUrl = movie.PosterUrl,
-                VisionEntryDate = movie.VisionEntryDate
+                IsActive = movie.IsActive
             };
         }
     }
