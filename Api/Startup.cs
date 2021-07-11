@@ -65,6 +65,7 @@ namespace Api
             services.AddTransient<IQueryHandler<GetTypeByIdQuery, TypeResponse>, GetTypeByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetCountryListQuery, List<CountryResponse>>, GetCountryListQueryHandler>();
             services.AddTransient<IQueryHandler<GetCountryByIdQuery, CountryResponse>, GetCountryByIdQueryHandler>();
+            services.AddTransient<IQueryHandler<GetPersonListQuery, List<PersonResponse>>, GetPersonListQueryHandler>();
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             

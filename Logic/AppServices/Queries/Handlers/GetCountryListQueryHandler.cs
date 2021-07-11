@@ -24,12 +24,12 @@ namespace Logic.AppServices.Queries.Handlers
             return dtos;
         }
         
-        private CountryResponse ConvertToDto(Country Country)
+        private CountryResponse ConvertToDto(Country country)
         {
             return new CountryResponse
             {
-                Id = Country.Id,
-                Name = Country.Name
+                Id = country.Id,
+                Name = country.Name
             };
         }
     }
