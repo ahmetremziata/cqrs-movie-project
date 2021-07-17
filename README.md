@@ -19,17 +19,34 @@ First of all you should standup below dependencies;
 
 ## Docker
 You can open dependencies with docker
-It is an example for running postgres with docker
 
+It is an example for running postgres with docker
 Create Docker container with Postgres database:
-docker create --name postgres-movie -e POSTGRES_PASSWORD=movie -p 5432:5432 postgres:11.5-alpine
+```yml
+  docker create --name postgres-movie -e POSTGRES_PASSWORD=movie -p 5432:5432 postgres:11.5-alpine
+```
 
 Start container:
-docker start postgres-movie
+```yml
+  docker start postgres-movie
+```
 
 Stop container:
-docker stop postgres-movie
+```yml
+  docker stop postgres-movie
+```
 
+Note: This stores the data inside the container - when you delete the container, the data is deleted as well.
+
+Connect to PSQL prompt from docker: 
+```yml
+  docker exec -it postgres-movie psql -U postgres
+```
+
+Create the Database with psql command:
+```yml
+psql> create database movie;
+```
 
 After you initialize db, you can run queries in table_initialize.sql. So far movies tables will be initialized with default values
 
