@@ -12,7 +12,7 @@ First of all you should standup below dependencies;
 - postgre with following configs
 ```yml
   "ConnectionStrings": {
-    "MovieConnection": "User ID=postgre;Password=postgre;Server=localhost;Port=5432;Database=postgres;Integrated Security=true;Pooling=true;"
+    "MovieConnection": "User ID=postgres;Password=movie;Server=localhost;Port=5432;Database=movie;Integrated Security=true;Pooling=true;"
   }
 ```
 - elasticsearch in localhost:9200
