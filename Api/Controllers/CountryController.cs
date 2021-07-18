@@ -38,12 +38,7 @@ namespace Api.Controllers
                 CountryId = countryId
             });
 
-            if (response == null)
-            {
-                return NotFound();
-            }
-            
-            return Ok(response);
+            return response == null ? NotFound() : Ok(response);
         }
 
         [SwaggerResponse((int) HttpStatusCode.OK)]

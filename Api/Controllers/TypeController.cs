@@ -38,12 +38,7 @@ namespace Api.Controllers
                 TypeId = typeId
             });
 
-            if (response == null)
-            {
-                return NotFound();
-            }
-            
-            return Ok(response);
+            return response == null ? NotFound() : Ok(response);
         }
         
         [SwaggerResponse((int)HttpStatusCode.OK)]

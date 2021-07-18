@@ -28,5 +28,18 @@ namespace Api.Controllers
             var list = await _messages.Dispatch(new GetPersonListQuery());
             return Ok(list);
         }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(PersonDetailResponse))]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpGet("{personId}")]
+        public async  Task<IActionResult> GetPersonById(int personId)
+        {
+            var response = await _messages.Dispatch(new GetPersonByIdQuery()
+            {
+                PersonId = personId
+            });            
+            
+            return response == null ? NotFound() : Ok(response);
+        }
     }
 }

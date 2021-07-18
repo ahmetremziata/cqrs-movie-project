@@ -26,12 +26,12 @@ namespace Logic.AppServices.Queries.Handlers
             return ConvertToDto(type);
         }
         
-        private TypeResponse ConvertToDto(Type Type)
+        private TypeResponse ConvertToDto(Type type)
         {
             return new TypeResponse
             {
-                Id = Type.Id,
-                Name = Type.Name
+                Id = type.Id,
+                Name = type.Name
             };
         }
     }

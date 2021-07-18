@@ -31,11 +31,6 @@ namespace Logic.AppServices.Queries.Handlers
                 PersonId = person.Id,
                 Name = person.Name,
                 RealName = person.RealName,
-                Biography = person.Biography,
-                BirthDate = person.BirthDate,
-                BirthPlace = person.BirthPlace,
-                DeathDate = person.DeathDate,
-                DeathPlace = person.DeathPlace,
                 AvatarUrl = person.AvatarUrl
             };
         }
