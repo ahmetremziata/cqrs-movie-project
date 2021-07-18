@@ -8,7 +8,7 @@ An api example for cqrs and event sourcing
 
 ## Usage
 First of all you should standup below dependencies;
-- kafka in localhost:9092 
+- kafka in localhost:9092 (Download local or run with docker)
 - postgre with following configs
 ```yml
   "ConnectionStrings": {
@@ -50,5 +50,12 @@ psql> create database movie;
 
 After you initialize db, you can run queries in table_initialize.sql. So far movies tables will be initialized with default values
 
-Then run application and test command and queries endpoints
+## ElasticSearch
+To get data from elastic search first you run elastic on local. These link show you how you can run elastic on locak
+https://opensource.com/article/19/7/installing-elasticsearch-macos
+Note: You can also load kibana on your local to operate elastic processes
+For details; https://codingexplained.com/dev-ops/mac/installing-kibana-for-elasticsearch-on-os-x
+
+
+Finally run application and test command and queries endpoints
 
