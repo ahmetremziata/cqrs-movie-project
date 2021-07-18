@@ -1,4 +1,4 @@
-# cqrs-movie-project
+# cqrs-movie-api
 An api example for cqrs and event sourcing
 
 ## Dependencies
