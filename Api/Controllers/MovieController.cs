@@ -6,6 +6,7 @@ using Logic.AppServices.Queries;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Data.Repositories.Interfaces;
+using Logic.Dtos;
 using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,7 @@ namespace Api.Controllers
             #endregion
         }
 
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(InsertResponse))]
         [HttpPost("")]
         public async Task<IActionResult> InsertMovie( [FromBody] InsertMovieInfoResponse infoResponse)
         {
@@ -84,8 +86,8 @@ namespace Api.Controllers
                 VisionEntryDate = infoResponse.VisionEntryDate
             };
             
-            Result result = await _messages.Dispatch(command);
-            return result.IsSuccess ? Ok() : Error(result.Error);
+            InsertResult result = await _messages.InsertDispatch(command);
+            return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);
         }
 
         [HttpPut("{id}")]

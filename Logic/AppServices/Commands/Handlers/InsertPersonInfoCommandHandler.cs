@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
+using Logic.Dtos;
+using Logic.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Commands.Handlers
 {
-    public class InsertPersonInfoCommandHandler : ICommandHandler<InsertPersonInfoCommand>
+    public class InsertPersonInfoCommandHandler : IInsertCommandHandler<InsertPersonInfoCommand>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -17,14 +19,18 @@ namespace Logic.AppServices.Commands.Handlers
             _dataContext = dataContext;
         }
         
-        public async  Task<Result> Handle(InsertPersonInfoCommand command)
+        public async  Task<InsertResult> Handle(InsertPersonInfoCommand command)
         {
             var existingPerson = await _dataContext.Persons.SingleOrDefaultAsync(item =>
                 item.Name == command.Name && item.RealName == command.RealName);
 
             if (existingPerson != null)
             {
-                return Result.Failure($"Person already found for Name: {command.Name} RealName: {command.RealName}");
+                return new InsertResult()
+                {
+                    Result = Result.Failure(
+                        $"Person already found for Name: {command.Name} RealName: {command.RealName}")
+                };
             }
             
             Person person = new Person
@@ -42,7 +48,14 @@ namespace Logic.AppServices.Commands.Handlers
             
             await _dataContext.Persons.AddAsync(person);
             await _dataContext.SaveChangesAsync();
-            return Result.Success();
+            return new InsertResult()
+            {
+                Result = Result.Success(),
+                InsertResponse = new InsertResponse()
+                {
+                    Id = person.Id
+                }
+            };
         }
     }
 }

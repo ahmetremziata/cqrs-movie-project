@@ -42,11 +42,11 @@ namespace Api.Controllers
             return response == null ? NotFound() : Ok(response);
         }
         
-        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(InsertResponse))]
         [HttpPost("")]
         public async  Task<IActionResult> InsertPerson([FromBody] InsertPersonInfoResponse insertPersonInfoResponse)
         {
-            var result = await _messages.Dispatch(new InsertPersonInfoCommand()
+            var result = await _messages.InsertDispatch(new InsertPersonInfoCommand()
             {
                 Name = insertPersonInfoResponse.Name,
                 AvatarUrl = insertPersonInfoResponse.AvatarUrl,
@@ -57,7 +57,7 @@ namespace Api.Controllers
                 DeathPlace = insertPersonInfoResponse.DeathPlace,
                 RealName = insertPersonInfoResponse.RealName
             });
-            return result.IsSuccess ? Ok() : Error(result.Error);        
+            return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);        
         }
     }
 }

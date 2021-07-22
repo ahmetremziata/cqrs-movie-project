@@ -3,7 +3,6 @@ using System.Net;
 using Api.Infrastructures.Extensions;
 using Api.Utils;
 using Confluent.Kafka;
-using Logic.AppServices;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Commands.Handlers;
 using Logic.AppServices.Queries;
@@ -42,7 +41,7 @@ namespace Api
                     (new EditMovieInfoCommandHandler(provider.GetService<MovieDataContext>())));*/
             services.AddTransient<ICommandHandler<InsertCountryInfoCommand>, InsertCountryInfoCommandHandler>();
             services.AddTransient<ICommandHandler<EditMovieInfoCommand>, EditMovieInfoCommandHandler>();
-            services.AddTransient<ICommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
+            services.AddTransient<IInsertCommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeleteMovieCommand>>(provider =>
                 new AuditLoggingDecorator<DeleteMovieCommand>
                     (new DeleteMovieCommandHandler(provider.GetService<MovieDataContext>())));
@@ -56,7 +55,7 @@ namespace Api
             services.AddTransient<ICommandHandler<UpsertTypeToMovieCommand>, UpsertTypeToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
-            services.AddTransient<ICommandHandler<InsertPersonInfoCommand>, InsertPersonInfoCommandHandler>();
+            services.AddTransient<IInsertCommandHandler<InsertPersonInfoCommand>, InsertPersonInfoCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieResponse>>, GetMovieListQueryHandler>();
             //services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdWithSeperateDomainModelQueryHandler>();

@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
+using Logic.Dtos;
+using Logic.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Commands.Handlers
 {
-    public sealed class InsertMovieInfoCommandHandler : ICommandHandler<InsertMovieInfoCommand>
+    public sealed class InsertMovieInfoCommandHandler : IInsertCommandHandler<InsertMovieInfoCommand>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -16,7 +18,7 @@ namespace Logic.AppServices.Commands.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<Result> Handle(InsertMovieInfoCommand command)
+        public async Task<InsertResult> Handle(InsertMovieInfoCommand command)
         {
             var existingMovie = await _dataContext.Movies.SingleOrDefaultAsync(item =>
                 item.Name == command.Name && item.OriginalName == command.OriginalName &&
@@ -24,7 +26,11 @@ namespace Logic.AppServices.Commands.Handlers
 
             if (existingMovie != null)
             {
-                return Result.Failure($"Movie already found for Name: {command.Name} OriginalName: {command.OriginalName} ConstructionYear: {command.ConstructionYear}");
+                return new InsertResult()
+                {
+                    Result = Result.Failure(
+                        $"Movie already found for Name: {command.Name} OriginalName: {command.OriginalName} ConstructionYear: {command.ConstructionYear}")
+                };
             }
                 
             Movie movie = new Movie
@@ -42,7 +48,13 @@ namespace Logic.AppServices.Commands.Handlers
             
             await _dataContext.Movies.AddAsync(movie);
             await _dataContext.SaveChangesAsync();
-            return Result.Success();
+            return new InsertResult()
+            {
+                Result = Result.Success(), InsertResponse = new InsertResponse()
+                {
+                    Id = movie.Id
+                }
+            };
         }
     }
 }

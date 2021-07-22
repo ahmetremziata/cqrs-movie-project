@@ -6,6 +6,7 @@ using Logic.AppServices.Commands;
 using Logic.AppServices.Commands.Handlers;
 using Logic.AppServices.Queries;
 using Logic.AppServices.Queries.Handlers;
+using Logic.Dtos;
 
 namespace Logic.Utils
 {
@@ -26,6 +27,17 @@ namespace Logic.Utils
 
             dynamic handler = _provider.GetService(handlerType);
             Result result = await handler.Handle((dynamic) command);
+            return result;
+        }
+        
+        public async Task<InsertResult> InsertDispatch(ICommand command)
+        {
+            Type type = typeof(IInsertCommandHandler<>);
+            Type[] typeArgs = {command.GetType()};
+            Type handlerType = type.MakeGenericType(typeArgs);
+
+            dynamic handler = _provider.GetService(handlerType);
+            InsertResult result = await handler.Handle((dynamic) command);
             return result;
         }
 
