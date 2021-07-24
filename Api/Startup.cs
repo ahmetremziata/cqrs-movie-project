@@ -57,6 +57,7 @@ namespace Api
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
             services.AddTransient<ICommandHandler<EditPersonInfoCommand>, EditPersonInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeletePersonCommand>, DeletePersonCommandHandler>();
+            services.AddTransient<ICommandHandler<InsertRoleInfoCommand>, InsertRoleInfoCommandHandler>();
             services.AddTransient<IInsertCommandHandler<InsertPersonInfoCommand>, InsertPersonInfoCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieResponse>>, GetMovieListQueryHandler>();
             //services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdQueryHandler>();
@@ -69,6 +70,7 @@ namespace Api
             services.AddTransient<IQueryHandler<GetCountryByIdQuery, CountryResponse>, GetCountryByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetPersonListQuery, List<PersonResponse>>, GetPersonListQueryHandler>();
             services.AddTransient<IQueryHandler<GetPersonByIdQuery, PersonDetailResponse>, GetPersonByIdQueryHandler>();
+            services.AddTransient<IQueryHandler<GetRoleListQuery, List<RoleResponse>>, GetRoleListQueryHandler>();
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             

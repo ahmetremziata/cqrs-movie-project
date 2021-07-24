@@ -70,7 +70,7 @@ namespace Api.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK)]
         [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpDelete("{countryId}")]
-        public async  Task<IActionResult> Delete(int countryId)
+        public async  Task<IActionResult> DeleteCountry(int countryId)
         {
             var result = await _messages.Dispatch(new DeleteCountryCommand()
             {

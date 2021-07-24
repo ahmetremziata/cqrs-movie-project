@@ -68,7 +68,7 @@ namespace Api.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK)]
         [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpDelete("{typeId}")]
-        public async  Task<IActionResult> Delete(int typeId)
+        public async  Task<IActionResult> DeleteType(int typeId)
         {
             var result = await _messages.Dispatch(new DeleteTypeCommand()
             {
