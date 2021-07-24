@@ -44,7 +44,7 @@ namespace Api
             services.AddTransient<IInsertCommandHandler<InsertMovieInfoCommand>, InsertMovieInfoCommandHandler>();
             services.AddTransient<ICommandHandler<DeleteMovieCommand>>(provider =>
                 new AuditLoggingDecorator<DeleteMovieCommand>
-                    (new DeleteMovieCommandHandler(provider.GetService<MovieDataContext>())));
+                    (new DeleteMovieCommandHandler(provider.GetService<MovieDataContext>(), provider.GetService<IConfiguration>(), provider.GetService<IProducerService>(), provider.GetService<ILogger<DeleteMovieCommandHandler>>())));
             services.AddTransient<ICommandHandler<UpsertPersonToMovieCommand>, UpsertPersonToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<InsertTypeInfoCommand>, InsertTypeInfoCommandHandler>();
             services.AddTransient<ICommandHandler<EditTypeInfoCommand>, EditTypeInfoCommandHandler>();
