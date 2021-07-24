@@ -6,7 +6,7 @@ create table movies
             primary key,
     name              varchar(250)   not null,
     original_name     varchar(250),
-    description       varchar(10000) not null,
+    description       varchar(10000),
     construction_year integer        not null,
     total_minute      integer        not null,
     poster_url        varchar(250),
