@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,13 +42,34 @@ namespace Logic.AppServices.Commands.Handlers
             {
                 return Result.Failure($"Movie already active for movieId {command.MovieId}");
             }
-
-            movie.IsActive = true;
-            await _dataContext.SaveChangesAsync();
-
+            
+            if (String.IsNullOrWhiteSpace(movie.PosterUrl))
+            {
+                return Result.Failure($"Movie's poster url is invalid for movieId {command.MovieId}");
+            }
+            
             var countries = await _dataContext.MovieCountries.Where(item => item.MovieId == movie.Id).ToListAsync();
             var types = await _dataContext.MovieTypes.Where(item => item.MovieId == movie.Id).ToListAsync();
             var persons = await _dataContext.MoviePersons.Where(item => item.MovieId == movie.Id).ToListAsync();
+            
+            if (!types.Any())
+            {
+                return Result.Failure($"Movie's types not entered for movieId {command.MovieId}. At least one type should be entered");
+            }
+            
+            if (!countries.Any())
+            {
+                return Result.Failure($"Movie's countries not entered for movieId {command.MovieId}. At least one country should be entered");
+            }
+            
+            if (!persons.Any())
+            {
+                return Result.Failure($"Movie's persons not entered for movieId {command.MovieId}. At least one person should be entered");
+            }
+            
+            movie.IsActive = true;
+            await _dataContext.SaveChangesAsync();
+
 
             var topic = _configuration["MovieActivatedTopicName"];
             var identity = new MovieIdentity()
