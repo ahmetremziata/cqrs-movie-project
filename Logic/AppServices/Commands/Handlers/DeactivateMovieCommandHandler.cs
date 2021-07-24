@@ -28,6 +28,7 @@ namespace Logic.AppServices.Commands.Handlers
         
         public async Task<Result> Handle(DeactivateMovieCommand command)
         {
+            var topic = _configuration["MovieDeactivatedTopicName"];
             Movie movie =  await _dataContext.Movies.FirstOrDefaultAsync(item => item.Id == command.MovieId);
             if (movie == null)
             {
@@ -39,9 +40,6 @@ namespace Logic.AppServices.Commands.Handlers
                 return Result.Failure($"Movie already passive for movieId {command.MovieId}");
             }
             
-            var topic = _configuration["MovieDeactivatedTopicName"];
-
-
             movie.IsActive = false;
             await _dataContext.SaveChangesAsync();
             
