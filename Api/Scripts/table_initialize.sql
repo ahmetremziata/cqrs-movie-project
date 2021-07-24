@@ -22,7 +22,7 @@ create table persons
         constraint persons_pkey
             primary key,
     name        varchar(255) not null,
-    real_name   varchar(255) not null,
+    real_name   varchar(255),
     biography   varchar(2000),
     avatar_url  varchar(255),
     birth_date  varchar(100),
