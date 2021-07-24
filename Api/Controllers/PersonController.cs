@@ -59,5 +59,35 @@ namespace Api.Controllers
             });
             return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);        
         }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [HttpPut("{id}")]
+        public async  Task<IActionResult> EditPerson(int id, [FromBody] EditPersonInfoResponse editPersonInfoResponse)
+        {
+            var result = await _messages.Dispatch(new EditPersonInfoCommand()
+            {
+                Id = id,
+                Name = editPersonInfoResponse.Name,
+                AvatarUrl = editPersonInfoResponse.AvatarUrl,
+                Biography = editPersonInfoResponse.Biography,
+                BirthDate = editPersonInfoResponse.BirthDate,
+                BirthPlace = editPersonInfoResponse.BirthPlace,
+                DeathDate = editPersonInfoResponse.DeathDate,
+                DeathPlace = editPersonInfoResponse.DeathPlace,
+                RealName = editPersonInfoResponse.RealName
+            });
+            return result.IsSuccess ? Ok() : Error(result.Error);        
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [HttpDelete("{id}")]
+        public async  Task<IActionResult> DeletePerson(int id)
+        {
+            var result = await _messages.Dispatch(new DeletePersonCommand()
+            {
+                Id = id,
+            });
+            return result.IsSuccess ? Ok() : Error(result.Error);        
+        }
     }
 }

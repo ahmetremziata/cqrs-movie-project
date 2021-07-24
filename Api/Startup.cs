@@ -55,6 +55,8 @@ namespace Api
             services.AddTransient<ICommandHandler<UpsertTypeToMovieCommand>, UpsertTypeToMovieCommandHandler>();
             services.AddTransient<ICommandHandler<ActivateMovieCommand>, ActivateMovieCommandHandler>();
             services.AddTransient<ICommandHandler<DeactivateMovieCommand>, DeactivateMovieCommandHandler>();
+            services.AddTransient<ICommandHandler<EditPersonInfoCommand>, EditPersonInfoCommandHandler>();
+            services.AddTransient<ICommandHandler<DeletePersonCommand>, DeletePersonCommandHandler>();
             services.AddTransient<IInsertCommandHandler<InsertPersonInfoCommand>, InsertPersonInfoCommandHandler>();
             services.AddTransient<IQueryHandler<GetMovieListQuery, List<MovieResponse>>, GetMovieListQueryHandler>();
             //services.AddTransient<IQueryHandler<GetMovieByIdQuery, MovieDetailResponse>, GetMovieByIdQueryHandler>();

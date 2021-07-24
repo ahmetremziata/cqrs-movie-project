@@ -23,6 +23,16 @@ namespace Logic.AppServices.Commands.Handlers
             {
                 return Result.Failure($"No movie found for Id {command.Id}");
             }
+            
+            var existingMovie = await _dataContext.Movies.SingleOrDefaultAsync(item =>
+                item.Name == command.Name && item.OriginalName == command.OriginalName && item.Id != command.Id);
+
+            if (existingMovie != null)
+            {
+                return Result.Failure(
+                    $"Movie already found for Name: {command.Name} OriginalName: {command.OriginalName}");
+            } 
+            
             movie.OriginalName = command.OriginalName;
             movie.Description = command.Description;
             movie.Name = command.Name;
