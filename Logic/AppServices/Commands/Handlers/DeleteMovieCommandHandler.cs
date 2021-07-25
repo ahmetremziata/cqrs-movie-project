@@ -36,6 +36,12 @@ namespace Logic.AppServices.Commands.Handlers
             {
                 return Result.Failure($"No movie found for Id {command.Id}");
             }
+
+            if (movie.IsActive)
+            {
+                return Result.Failure($"Movie cannot be deleted because it is active for Id {command.Id}");
+            }
+            
             _dataContext.Movies.Remove(movie);
 
             List<MoviePerson> moviePersons =
