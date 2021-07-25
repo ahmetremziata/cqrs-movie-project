@@ -49,22 +49,22 @@ namespace Logic.AppServices.Queries.Handlers
                 IsActive = movie.IsActive,
                 VisionEntryDate = movie.VisionEntryDate,
                 TotalActorCount = movieActors.Count,
-                Actors = await GetActors(movieActors),
+                Team = await GetActors(movieActors),
                 Countries = await GetCountries(movieCountries),
                 Types = await GetTypes(movieTypes)
             };
         }
 
-        private async Task<List<MovieActorResponse>> GetActors(List<MoviePerson> movieActors)
+        private async Task<List<MovieTeamResponse>> GetActors(List<MoviePerson> movieActors)
         {
-            List<MovieActorResponse> result = new List<MovieActorResponse>();
+            List<MovieTeamResponse> result = new List<MovieTeamResponse>();
 
             foreach (var movieActor in movieActors)
             {
                 var actor = await _dataContext.Persons.SingleAsync(item => item.Id == movieActor.PersonId);
-                result.Add(new MovieActorResponse()
+                result.Add(new MovieTeamResponse()
                 {
-                    ActorId = movieActor.PersonId,
+                    PersonId = movieActor.PersonId,
                     CharacterName = movieActor.CharacterName,
                     Name = actor.Name
                 });

@@ -37,18 +37,21 @@ namespace Logic.AppServices.Queries.Handlers
                    c.name country_name,
                    t.id type_id,
                    t.name type_name,
-                   p.id actor_id,
+                   p.id person_id,
                    p.name actor_name,
-                   mp.character_name
+                   mp.character_name,
+                   r.name role_name
             FROM movies m
             left join movie_countries mc on m.id = mc.movie_id
             left join movie_types mt on m.id = mt.movie_id
-            left join movie_persons mp on m.id = mp.movie_id and mp.role_id=1
+            left join movie_persons mp on m.id = mp.movie_id
+            left join roles r on r.id=mp.role_id
             left join types t on mt.type_id = t.id
             left join countries c on mc.country_id = c.id
             left join persons p on mp.person_id = p.id
             where
                 m.id=@movieId
+            order by r.id
             ";
             
             using (NpgsqlConnection connection = new NpgsqlConnection(_connection.Value))
@@ -82,7 +85,7 @@ namespace Logic.AppServices.Queries.Handlers
             result.IsActive = firstMovie.is_active;
             result.Types = await GetTypes(movies);
             result.Countries = await GetCountries(movies);
-            result.Actors = await GetActors(movies);
+            result.Team = await GetTeam(movies);
             return result;
         }
         
@@ -124,19 +127,20 @@ namespace Logic.AppServices.Queries.Handlers
             return result;
         }
         
-        private async Task<List<MovieActorResponse>> GetActors(List<MovieInDb> movies)
+        private async Task<List<MovieTeamResponse>> GetTeam(List<MovieInDb> movies)
         {
-            List<MovieActorResponse> result = new List<MovieActorResponse>();
+            List<MovieTeamResponse> result = new List<MovieTeamResponse>();
 
             foreach (var movie in movies)
             {
-                if (!result.Exists(item => item.ActorId == movie.actor_id))
+                if (!result.Exists(item => item.PersonId == movie.person_id && item.RoleName == movie.role_name))
                 {
-                    result.Add(new MovieActorResponse()
+                    result.Add(new MovieTeamResponse()
                     {
-                        ActorId = movie.actor_id,
+                        PersonId = movie.person_id,
                         Name = movie.actor_name,
-                        CharacterName = movie.character_name
+                        CharacterName = movie.character_name,
+                        RoleName = movie.role_name
                     });
                 }
             }
@@ -160,16 +164,16 @@ namespace Logic.AppServices.Queries.Handlers
             public readonly string country_name;
             public readonly int type_id;
             public readonly string type_name;
-            public readonly int actor_id;
+            public readonly int person_id;
             public readonly string actor_name;
             public readonly string character_name;
+            public readonly string role_name;
 
             public MovieInDb()
             {
-                
             }
 
-            public MovieInDb(int movieId, string movieName, string originalName, string description, int constructionYear, int totalMinute, string posterUrl, bool isActive, DateTime? visionEntryDate, int totalActorCount, int countryId, string countryName, int typeId, string typeName, int actorId, string actorName, string characterName)
+            public MovieInDb(int movieId, string movieName, string originalName, string description, int constructionYear, int totalMinute, string posterUrl, bool isActive, DateTime? visionEntryDate, int totalActorCount, int countryId, string countryName, int typeId, string typeName, int actorId, string actorName, string characterName, string roleName)
             {
                 movie_id = movieId;
                 movie_name = movieName;
@@ -185,9 +189,10 @@ namespace Logic.AppServices.Queries.Handlers
                 country_name = countryName;
                 type_id = typeId;
                 type_name = typeName;
-                actor_id = actorId;
+                person_id = actorId;
                 actor_name = actorName;
                 character_name = characterName;
+                role_name = roleName;
             }
         }
     }

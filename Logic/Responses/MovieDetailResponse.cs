@@ -17,7 +17,7 @@ namespace Logic.Responses
         public int TotalActorCount { get; set; }
         public List<MovieTypeResponse> Types { get; set; }
         public List<MovieCountryResponse> Countries { get; set; }
-        public List<MovieActorResponse> Actors { get; set; }
+        public List<MovieTeamResponse> Team { get; set; }
     }
 
     public class MovieTypeResponse
@@ -32,9 +32,10 @@ namespace Logic.Responses
         public string Name { get; set; }
     }
     
-    public class MovieActorResponse
+    public class MovieTeamResponse
     {
-        public int ActorId { get; set; }
+        public int PersonId { get; set; }
+        public string RoleName { get; set; }
         public string Name { get; set; }
         public string CharacterName { get; set; }
     }
