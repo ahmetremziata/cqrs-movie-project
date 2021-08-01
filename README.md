@@ -9,39 +9,14 @@ An api example for cqrs and event sourcing
 ## Usage
 First of all you should standup below dependencies;
 - kafka in localhost:9092 (Download local or run with docker)
-- postgre with following configs
+- postgre with following configs (Download local or run with docker)
 ```yml
   "ConnectionStrings": {
-    "MovieConnection": "User ID=postgres;Password=movie;Server=localhost;Port=5432;Database=movie;Integrated Security=true;Pooling=true;"
+    "MovieConnection": "User ID=postgres;Server=localhost;Port=5432;Database=movie;Integrated Security=true;Pooling=true;"
   }
 ```
-- elasticsearch in localhost:9200
+- elasticsearch in localhost:9200 (Download local or run with docker)
 
-## Docker
-You can open dependencies with docker
-
-It is an example for running postgres with docker
-Create Docker container with Postgres database:
-```yml
-  docker create --name postgres-movie -e POSTGRES_PASSWORD=movie -p 5432:5432 postgres:11.5-alpine
-```
-
-Start container:
-```yml
-  docker start postgres-movie
-```
-
-Connect to PSQL prompt from docker: 
-```yml
-  docker exec -it postgres-movie psql -U postgres
-```
-
-Create the Database with psql command:
-```yml
-psql> create database movie;
-```
-
-After you initialize db, you can run queries in table_initialize.sql. So far movies tables will be initialized with default values
 
 ## ElasticSearch
 To get data from elastic search first you run elastic on local. These link show you how you can run elastic on locak
