@@ -59,12 +59,11 @@ namespace Logic.AppServices.Queries.Handlers
             }
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(@"{""bool"": {""should"": [");
+            stringBuilder.Append(@"{""bool"": {""must"": [");
 
             if (!String.IsNullOrWhiteSpace(query.Name))
             {
-                stringBuilder.Append(@"{""match_phrase_prefix"": {""name"": """ + query.Name + @"""}},");
-                stringBuilder.Append(@"{""match_phrase_prefix"": {""originalName"": """ + query.Name + @"""}}");
+                stringBuilder.Append(@"{""match_phrase_prefix"": {""name"": """ + query.Name + @"""}}");
             }
 
             if ((query.CountryId != null || query.TypeId != null || query.ConstructionYear != null) && !String.IsNullOrWhiteSpace(query.Name))
