@@ -31,13 +31,6 @@ Start container:
   docker start postgres-movie
 ```
 
-Stop container:
-```yml
-  docker stop postgres-movie
-```
-
-Note: This stores the data inside the container - when you delete the container, the data is deleted as well.
-
 Connect to PSQL prompt from docker: 
 ```yml
   docker exec -it postgres-movie psql -U postgres
