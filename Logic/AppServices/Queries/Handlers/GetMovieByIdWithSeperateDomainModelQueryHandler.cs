@@ -40,7 +40,8 @@ namespace Logic.AppServices.Queries.Handlers
                    p.id person_id,
                    p.name actor_name,
                    mp.character_name,
-                   r.name role_name
+                   r.name role_name,
+                   r.id role_id
             FROM movies m
             left join movie_countries mc on m.id = mc.movie_id
             left join movie_types mt on m.id = mt.movie_id
@@ -140,7 +141,8 @@ namespace Logic.AppServices.Queries.Handlers
                         PersonId = movie.person_id,
                         Name = movie.actor_name,
                         CharacterName = movie.character_name,
-                        RoleName = movie.role_name
+                        RoleName = movie.role_name,
+                        RoleId = movie.role_id
                     });
                 }
             }
@@ -168,12 +170,13 @@ namespace Logic.AppServices.Queries.Handlers
             public readonly string actor_name;
             public readonly string character_name;
             public readonly string role_name;
+            public readonly int role_id;
 
             public MovieInDb()
             {
             }
 
-            public MovieInDb(int movieId, string movieName, string originalName, string description, int constructionYear, int totalMinute, string posterUrl, bool isActive, DateTime? visionEntryDate, int totalActorCount, int countryId, string countryName, int typeId, string typeName, int actorId, string actorName, string characterName, string roleName)
+            public MovieInDb(int movieId, string movieName, string originalName, string description, int constructionYear, int totalMinute, string posterUrl, bool isActive, DateTime? visionEntryDate, int totalActorCount, int countryId, string countryName, int typeId, string typeName, int actorId, string actorName, string characterName, string roleName, int roleId)
             {
                 movie_id = movieId;
                 movie_name = movieName;
@@ -193,6 +196,7 @@ namespace Logic.AppServices.Queries.Handlers
                 actor_name = actorName;
                 character_name = characterName;
                 role_name = roleName;
+                role_id = roleId;
             }
         }
     }

@@ -35,6 +35,7 @@ namespace Logic.Responses
     public class MovieTeamResponse
     {
         public int PersonId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string Name { get; set; }
         public string CharacterName { get; set; }
