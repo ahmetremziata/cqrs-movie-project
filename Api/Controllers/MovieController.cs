@@ -7,6 +7,7 @@ using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Data.Repositories.Interfaces;
 using Logic.Dtos;
+using Logic.Requests;
 using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -73,17 +74,17 @@ namespace Api.Controllers
 
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(InsertResponse))]
         [HttpPost("")]
-        public async Task<IActionResult> InsertMovie( [FromBody] InsertMovieInfoResponse infoResponse)
+        public async Task<IActionResult> InsertMovie( [FromBody] InsertMovieInfoRequest infoRequest)
         {
             var command = new InsertMovieInfoCommand()
             {
-                Name = infoResponse.Name,
-                OriginalName = infoResponse.OriginalName,
-                ConstructionYear = infoResponse.ConstructionYear,
-                Description = infoResponse.Description,
-                PosterUrl = infoResponse.PosterUrl,
-                TotalMinute = infoResponse.TotalMinute,
-                VisionEntryDate = infoResponse.VisionEntryDate
+                Name = infoRequest.Name,
+                OriginalName = infoRequest.OriginalName,
+                ConstructionYear = infoRequest.ConstructionYear,
+                Description = infoRequest.Description,
+                PosterUrl = infoRequest.PosterUrl,
+                TotalMinute = infoRequest.TotalMinute,
+                VisionEntryDate = infoRequest.VisionEntryDate
             };
             
             InsertResult result = await _messages.InsertDispatch(command);
@@ -91,18 +92,18 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditMovie(int id, [FromBody] EditMovieInfoResponse infoResponse)
+        public async Task<IActionResult> EditMovie(int id, [FromBody] EditMovieInfoRequest infoRequest)
         {
             #region "With messages"
             var command = new EditMovieInfoCommand()
             {
-                Name = infoResponse.Name,
-                OriginalName = infoResponse.OriginalName,
-                ConstructionYear = infoResponse.ConstructionYear,
-                Description = infoResponse.Description,
-                PosterUrl = infoResponse.PosterUrl,
-                TotalMinute = infoResponse.TotalMinute,
-                VisionEntryDate = infoResponse.VisionEntryDate,
+                Name = infoRequest.Name,
+                OriginalName = infoRequest.OriginalName,
+                ConstructionYear = infoRequest.ConstructionYear,
+                Description = infoRequest.Description,
+                PosterUrl = infoRequest.PosterUrl,
+                TotalMinute = infoRequest.TotalMinute,
+                VisionEntryDate = infoRequest.VisionEntryDate,
                 Id = id
                 
             };
@@ -155,12 +156,12 @@ namespace Api.Controllers
         }
         
         [HttpPut("upsert-person/{movieId}")]
-        public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieResponse response)
+        public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieRequest request)
         {
             var command = new UpsertPersonToMovieCommand()
             {
                 MovieId = movieId,
-                MoviePersons = response.MoviePersons
+                MoviePersons = request.MoviePersons
             };
             
             Result result = await _messages.Dispatch(command);
@@ -168,12 +169,12 @@ namespace Api.Controllers
         }
         
         [HttpPut("upsert-country/{movieId}")]
-        public async Task<IActionResult> UpsertCountryToMovie(int movieId, [FromBody] UpsertCountryToMovieResponse response)
+        public async Task<IActionResult> UpsertCountryToMovie(int movieId, [FromBody] UpsertCountryToMovieRequest request)
         {
             var command = new UpsertCountryToMovieCommand()
             {
                 MovieId = movieId,
-                CountryIds = response.CountryIds
+                CountryIds = request.CountryIds
             };
             
             Result result = await _messages.Dispatch(command);
@@ -181,12 +182,12 @@ namespace Api.Controllers
         }
         
         [HttpPut("upsert-type/{movieId}")]
-        public async Task<IActionResult> UpsertTypeToMovie(int movieId, [FromBody] UpsertTypeToMovieResponse response)
+        public async Task<IActionResult> UpsertTypeToMovie(int movieId, [FromBody] UpsertTypeToMovieRequest request)
         {
             var command = new UpsertTypeToMovieCommand()
             {
                 MovieId = movieId,
-                TypeIds = response.TypeIds
+                TypeIds = request.TypeIds
             };
             
             Result result = await _messages.Dispatch(command);
@@ -216,6 +217,18 @@ namespace Api.Controllers
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
+        
+        /*[HttpPut("remove/actor/{movieId}")]
+        public async Task<IActionResult> RemoveActor(int movieId, [FromBody] UpsertTypeToMovieResponse response)
+        {
+            var command = new ActivateMovieCommand()
+            {
+                MovieId = movieId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }*/
 
         private MovieResponse ConvertToDto(Movie movie)
         {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Logic.Responses
+namespace Logic.Requests
 {
-    public class UpsertTypeToMovieResponse
+    public class UpsertTypeToMovieRequest
     {
         public List<int> TypeIds { get; set; }
     }

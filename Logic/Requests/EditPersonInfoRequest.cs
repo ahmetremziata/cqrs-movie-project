@@ -1,6 +1,6 @@
-namespace Logic.Responses
+namespace Logic.Requests
 {
-    public class EditPersonInfoResponse
+    public class EditPersonInfoRequest
     {
         public string Name { get; set; }
         public string RealName { get; set; }

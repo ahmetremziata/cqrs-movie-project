@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Queries;
+using Logic.Requests;
 using Logic.Responses;
 using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -44,37 +45,37 @@ namespace Api.Controllers
         
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(InsertResponse))]
         [HttpPost("")]
-        public async  Task<IActionResult> InsertPerson([FromBody] InsertPersonInfoResponse insertPersonInfoResponse)
+        public async  Task<IActionResult> InsertPerson([FromBody] InsertPersonInfoRequest insertPersonInfoRequest)
         {
             var result = await _messages.InsertDispatch(new InsertPersonInfoCommand()
             {
-                Name = insertPersonInfoResponse.Name,
-                AvatarUrl = insertPersonInfoResponse.AvatarUrl,
-                Biography = insertPersonInfoResponse.Biography,
-                BirthDate = insertPersonInfoResponse.BirthDate,
-                BirthPlace = insertPersonInfoResponse.BirthPlace,
-                DeathDate = insertPersonInfoResponse.DeathDate,
-                DeathPlace = insertPersonInfoResponse.DeathPlace,
-                RealName = insertPersonInfoResponse.RealName
+                Name = insertPersonInfoRequest.Name,
+                AvatarUrl = insertPersonInfoRequest.AvatarUrl,
+                Biography = insertPersonInfoRequest.Biography,
+                BirthDate = insertPersonInfoRequest.BirthDate,
+                BirthPlace = insertPersonInfoRequest.BirthPlace,
+                DeathDate = insertPersonInfoRequest.DeathDate,
+                DeathPlace = insertPersonInfoRequest.DeathPlace,
+                RealName = insertPersonInfoRequest.RealName
             });
             return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);        
         }
         
         [SwaggerResponse((int)HttpStatusCode.OK)]
         [HttpPut("{id}")]
-        public async  Task<IActionResult> EditPerson(int id, [FromBody] EditPersonInfoResponse editPersonInfoResponse)
+        public async  Task<IActionResult> EditPerson(int id, [FromBody] EditPersonInfoRequest editPersonInfoRequest)
         {
             var result = await _messages.Dispatch(new EditPersonInfoCommand()
             {
                 Id = id,
-                Name = editPersonInfoResponse.Name,
-                AvatarUrl = editPersonInfoResponse.AvatarUrl,
-                Biography = editPersonInfoResponse.Biography,
-                BirthDate = editPersonInfoResponse.BirthDate,
-                BirthPlace = editPersonInfoResponse.BirthPlace,
-                DeathDate = editPersonInfoResponse.DeathDate,
-                DeathPlace = editPersonInfoResponse.DeathPlace,
-                RealName = editPersonInfoResponse.RealName
+                Name = editPersonInfoRequest.Name,
+                AvatarUrl = editPersonInfoRequest.AvatarUrl,
+                Biography = editPersonInfoRequest.Biography,
+                BirthDate = editPersonInfoRequest.BirthDate,
+                BirthPlace = editPersonInfoRequest.BirthPlace,
+                DeathDate = editPersonInfoRequest.DeathDate,
+                DeathPlace = editPersonInfoRequest.DeathPlace,
+                RealName = editPersonInfoRequest.RealName
             });
             return result.IsSuccess ? Ok() : Error(result.Error);        
         }

@@ -1,8 +1,8 @@
 using System;
 
-namespace Logic.Responses
+namespace Logic.Requests
 {
-    public class InsertMovieInfoResponse
+    public class InsertMovieInfoRequest
     {
         public string Name { get; set; }
         public string OriginalName { get; set; }

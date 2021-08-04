@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Logic.Responses
+namespace Logic.Requests
 {
-    public class UpsertCountryToMovieResponse
+    public class UpsertCountryToMovieRequest
     {
         public List<int> CountryIds { get; set; }
     }

@@ -1,6 +1,6 @@
-namespace Logic.Responses
+namespace Logic.Requests
 {
-    public class MoviePersonResponse
+    public class MoviePersonRequest
     {
         public int PersonId { get; set; }
         public int RoleId { get; set; }

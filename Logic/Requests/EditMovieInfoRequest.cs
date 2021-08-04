@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Logic.Responses
+namespace Logic.Requests
 {
-    public class EditMovieInfoResponse
+    public class EditMovieInfoRequest
     {
         public string Name { get; set; }
         public string OriginalName { get; set; }
@@ -12,7 +12,7 @@ namespace Logic.Responses
         public int TotalMinute { get; set; }
         public string PosterUrl { get; set; }
         public DateTime? VisionEntryDate { get; set; }
-        public List<MoviePersonResponse> MoviePersons { get; set; }
+        public List<MoviePersonRequest> MoviePersons { get; set; }
         public List<int> CountryIds { get; set; }
         public List<int> TypeIds { get; set; }
     }
