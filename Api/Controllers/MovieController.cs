@@ -218,17 +218,19 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
-        /*[HttpPut("remove/actor/{movieId}")]
-        public async Task<IActionResult> RemoveActor(int movieId, [FromBody] UpsertTypeToMovieResponse response)
+        [HttpPut("remove/actor/{movieId}")]
+        public async Task<IActionResult> RemoveActorFromMovie(int movieId, [FromBody] MoviePersonRequest request)
         {
-            var command = new ActivateMovieCommand()
+            var command = new RemoveActorFromMovieCommand()
             {
-                MovieId = movieId
+                MovieId = movieId,
+                PersonId = request.PersonId,
+                RoleId = request.RoleId
             };
             
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
-        }*/
+        }
 
         private MovieResponse ConvertToDto(Movie movie)
         {
