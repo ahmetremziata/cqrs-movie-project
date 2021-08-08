@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.AppServices.Commands;
+using Logic.AppServices.Commands.Handlers;
 using Logic.AppServices.Queries;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
@@ -28,29 +31,28 @@ namespace Api.Controllers
             _dataContext = dataContext;
             _messages = messages;
         }
+        
+        [HttpGet("without-handler")]
+        public async  Task<IActionResult> GetListWithoutHandler()
+        {
+            IReadOnlyList<Movie> movies = await _movieRepository.GetMovies();
+            List<MovieResponse> response = movies.Select(x => ConvertToDto(x)).ToList();
+            return Ok(response);
+        }
 
         [HttpGet]
         public async  Task<IActionResult> GetList()
         {
-            #region "New Code"
             var list = await _messages.Dispatch(new GetMovieListQuery());
             return Ok(list);
-            #endregion
-
-            #region "Old Code"
-            /*
-            IReadOnlyList<Movie> movies = await _movieRepository.GetMovies();
-            List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
-            return Ok(dtos); */
-            #endregion
         }
+        
         
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(MovieDetailResponse))]
         [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpGet("{movieId}")]
         public async  Task<IActionResult> GetMovieById(int movieId)
         {
-            #region "New Code"
             var movie = await _messages.Dispatch(new GetMovieByIdQuery()
             {
                 MovieId = movieId
@@ -62,14 +64,6 @@ namespace Api.Controllers
             }
             
             return Ok(movie);
-            #endregion
-
-            #region "Old Code"
-            
-            /*IReadOnlyList<Movie> movies = await _movieRepository.GetMovies();
-            List<MovieDto> dtos = movies.Select(x => ConvertToDto(x)).ToList();
-            return Ok(dtos); */
-            #endregion
         }
 
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(InsertResponse))]
@@ -89,6 +83,46 @@ namespace Api.Controllers
             
             InsertResult result = await _messages.InsertDispatch(command);
             return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);
+        }
+        
+        //Old code
+        [HttpPut("without-handler/{id}")]
+        public async Task<IActionResult> EditMovieWithoutHandler(int id, [FromBody] EditMovieInfoRequest infoRequest)
+        {
+            Movie movie = await _movieRepository.GetMovieById(id);
+            if (movie == null)
+            {
+                return Error($"No movie found for Id {id}");
+            }
+            movie.OriginalName = infoRequest.OriginalName;
+            movie.Description = infoRequest.Description;
+            movie.Name = infoRequest.Name;
+            movie.PosterUrl = infoRequest.PosterUrl;
+            movie.TotalMinute = infoRequest.TotalMinute;
+            movie.VisionEntryDate = infoRequest.VisionEntryDate;
+            movie.ConstructionYear = infoRequest.ConstructionYear;
+            _dataContext.SaveChanges();
+            return Ok();
+        }
+        
+        //Old code
+        [HttpPut("with-handler/{id}")]
+        public async Task<IActionResult> EditMovieWithHandler(int id, [FromBody] EditMovieInfoRequest infoRequest)
+        {
+            var command = new EditMovieInfoCommand()
+            {
+                Name = infoRequest.Name,
+                OriginalName = infoRequest.OriginalName,
+                ConstructionYear = infoRequest.ConstructionYear,
+                Description = infoRequest.Description,
+                PosterUrl = infoRequest.PosterUrl,
+                TotalMinute = infoRequest.TotalMinute,
+                VisionEntryDate = infoRequest.VisionEntryDate,
+                Id = id
+            };
+            var handler = new EditMovieInfoCommandHandler(_dataContext);
+            Result result = await handler.Handle(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
         [HttpPut("{id}")]
@@ -110,43 +144,9 @@ namespace Api.Controllers
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
             #endregion
-            
-            #region "With command handler"
-            /*var command = new EditMovieInfoCommand()
-            {
-                Name = infoDto.Name,
-                OriginalName = infoDto.OriginalName,
-                ConstructionYear = infoDto.ConstructionYear,
-                Description = infoDto.Description,
-                PosterUrl = infoDto.PosterUrl,
-                TotalMinute = infoDto.TotalMinute,
-                VisionEntryDate = infoDto.VisionEntryDate,
-                Id = id
-            };
-            var handler = new EditMovieInfoCommandHandler(_movieRepository, _dataContext);
-            Result result = await handler.Handle(command);
-            return result.IsSuccess ? Ok() : Error(result.Error);*/
-            #endregion
-            
-            #region "Old Code"
-            /*
-            Movie movie = await _movieRepository.GetMovieById(id);
-            if (movie == null)
-            {
-                return Error($"No movie found for Id {id}");
-            }
-            movie.OriginalName = infoDto.OriginalName;
-            movie.Description = infoDto.Description;
-            movie.Name = infoDto.Name;
-            movie.PosterUrl = infoDto.PosterUrl;
-            movie.TotalMinute = infoDto.TotalMinute;
-            movie.VisionEntryDate = infoDto.VisionEntryDate;
-            movie.ConstructionYear = infoDto.ConstructionYear;
-            _dataContext.SaveChanges();
-            return Ok(); */
-            #endregion
         }
 
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
