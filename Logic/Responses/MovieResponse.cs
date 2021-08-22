@@ -8,5 +8,6 @@ namespace Logic.Responses
         public int ConstructionYear { get; set; }
         public int TotalMinute { get; set; }
         public bool IsActive { get; set; }
+        public bool IsSynchronized { get; set; }
     }
 }

@@ -34,7 +34,8 @@ namespace Logic.AppServices.Queries.Handlers
                 OriginalName = movie.OriginalName,
                 ConstructionYear = movie.ConstructionYear,
                 TotalMinute = movie.TotalMinute,
-                IsActive = movie.IsActive
+                IsActive = movie.IsActive,
+                IsSynchronized = movie.IsSynchronized
             };
         }
     }
