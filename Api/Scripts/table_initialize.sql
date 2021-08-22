@@ -12,7 +12,8 @@ create table movies
     poster_url        varchar(250),
     vision_entry_date date,
     created_on        date           not null,
-    is_active         boolean        not null
+    is_active         boolean        not null,
+    is_synchronized   boolean        not null
 );
 
 --Initialize persons table

@@ -20,7 +20,7 @@ namespace Logic.Data.Mappings
             builder.Property(r => r.VisionEntryDate).HasColumnName("vision_entry_date");
             builder.Property(r => r.CreatedOn).HasColumnName("created_on");
             builder.Property(r => r.IsActive).HasColumnName("is_active");
-
+            builder.Property(r => r.IsSynchronized).HasColumnName("is_synchronized");
         }
     }
 }

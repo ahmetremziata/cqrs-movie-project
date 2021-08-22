@@ -15,14 +15,14 @@ using Newtonsoft.Json;
 
 namespace Logic.AppServices.Commands.Handlers
 {
-    public sealed class ActivateMovieCommandHandler : ICommandHandler<ActivateMovieCommand>
+    public sealed class SynchronizeMovieCommandHandler : ICommandHandler<SynchronizeMovieCommand>
     {
         private readonly MovieDataContext _dataContext;
         private readonly IConfiguration _configuration;
         private readonly IProducerService _producerService;
-        private readonly ILogger<ActivateMovieCommandHandler> _logger;
+        private readonly ILogger<SynchronizeMovieCommandHandler> _logger;
         
-        public ActivateMovieCommandHandler(MovieDataContext dataContext, IConfiguration configuration, IProducerService producerService, ILogger<ActivateMovieCommandHandler> logger)
+        public SynchronizeMovieCommandHandler(MovieDataContext dataContext, IConfiguration configuration, IProducerService producerService, ILogger<SynchronizeMovieCommandHandler> logger)
         {
             _dataContext = dataContext;
             _configuration = configuration;
@@ -30,22 +30,17 @@ namespace Logic.AppServices.Commands.Handlers
             _logger = logger;
         }
         
-        public async Task<Result> Handle(ActivateMovieCommand command)
+        public async Task<Result> Handle(SynchronizeMovieCommand command)
         {
             Movie movie =  await _dataContext.Movies.FirstOrDefaultAsync(item => item.Id == command.MovieId);
             if (movie == null)
             {
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
-
-            if (movie.IsActive)
-            {
-                return Result.Failure($"Movie already active for movieId {command.MovieId}");
-            }
             
-            if (String.IsNullOrWhiteSpace(movie.PosterUrl))
+            if (movie.IsSynchronized)
             {
-                return Result.Failure($"Movie's poster url is invalid for movieId {command.MovieId}");
+                return Result.Failure($"Movie already synchronize for Id {command.MovieId}");
             }
             
             var countries = await _dataContext.MovieCountries.Where(item => item.MovieId == movie.Id).ToListAsync();
@@ -67,11 +62,10 @@ namespace Logic.AppServices.Commands.Handlers
                 return Result.Failure($"Movie's persons not entered for movieId {command.MovieId}. At least one person should be entered");
             }
             
-            movie.IsActive = true;
             movie.IsSynchronized = true;
             await _dataContext.SaveChangesAsync();
             
-            var topic = _configuration["MovieActivatedTopicName"];
+            var topic = _configuration["MovieUpdatedTopicName"];
             var identity = new MovieIdentity()
             {
                 VisionEntryDate = movie.VisionEntryDate,
@@ -101,7 +95,7 @@ namespace Logic.AppServices.Commands.Handlers
             if (!isSendEvent)
             {
                 _logger.LogError(
-                    $"{nameof(ActivateMovieCommandHandler)} {nameof(Handle)} not produce movie activated event - Event:{JsonConvert.SerializeObject(movieActivatedEvent)} - Topic: {topic}");
+                    $"{nameof(SynchronizeMovieCommandHandler)} {nameof(Handle)} not produce movie updated event - Event:{JsonConvert.SerializeObject(movieActivatedEvent)} - Topic: {topic}");
             }
             return Result.Success();
         }

@@ -231,6 +231,18 @@ namespace Api.Controllers
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
+        
+        [HttpPut("synchronize/{movieId}")]
+        public async Task<IActionResult> SynchronizeMovie(int movieId)
+        {
+            var command = new SynchronizeMovieCommand()
+            {
+                MovieId = movieId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
 
         private MovieResponse ConvertToDto(Movie movie)
         {

@@ -25,6 +25,8 @@ namespace Logic.AppServices.Commands.Handlers
             {
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
+            
+            movie.IsSynchronized = false;
 
             List<MoviePerson> moviePersons =
                 await _dataContext.MoviePersons.Where(item => item.MovieId == movie.Id).ToListAsync();

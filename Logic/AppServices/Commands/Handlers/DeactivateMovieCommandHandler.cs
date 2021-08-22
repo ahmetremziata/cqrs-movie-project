@@ -41,6 +41,7 @@ namespace Logic.AppServices.Commands.Handlers
             }
             
             movie.IsActive = false;
+            movie.IsSynchronized = true;
             await _dataContext.SaveChangesAsync();
             
             MovieDeactivedEvent movieDeactivatedEvent = new MovieDeactivedEvent

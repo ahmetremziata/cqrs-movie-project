@@ -40,7 +40,9 @@ namespace Logic.AppServices.Commands.Handlers
             movie.TotalMinute = command.TotalMinute;
             movie.VisionEntryDate = command.VisionEntryDate;
             movie.ConstructionYear = command.ConstructionYear;
+            movie.IsSynchronized = false;
             await _dataContext.SaveChangesAsync();
+            
             return Result.Success();
         }
     }

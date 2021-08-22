@@ -17,5 +17,6 @@ namespace Logic.Data.Entities
         public DateTime? VisionEntryDate { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool IsActive { get; set; }
+        public bool IsSynchronized { get; set; }
     }
 }

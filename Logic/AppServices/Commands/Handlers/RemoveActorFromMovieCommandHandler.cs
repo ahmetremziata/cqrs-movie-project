@@ -23,6 +23,8 @@ namespace Logic.AppServices.Commands.Handlers
             {
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
+
+            movie.IsSynchronized = false;
             
             MoviePerson moviePerson =  await _dataContext.MoviePersons.FirstOrDefaultAsync(item => item.Id == command.MovieId 
                 && item.PersonId == command.PersonId 
@@ -30,7 +32,7 @@ namespace Logic.AppServices.Commands.Handlers
 
             if (moviePerson == null)
             {
-                return Result.Failure($"No person in movie found for movieId: {command.MovieId} personId: {command.PersonId} RoleId: {command.RoleId}");
+                return Result.Failure($"No person in movie found for movieId: {command.MovieId} personId: {command.PersonId} roleId: {command.RoleId}");
             }
             
             _dataContext.MoviePersons.Remove(moviePerson);

@@ -43,7 +43,8 @@ namespace Logic.AppServices.Commands.Handlers
                 VisionEntryDate = command.VisionEntryDate,
                 ConstructionYear = command.ConstructionYear,
                 CreatedOn = DateTime.Now,
-                IsActive = false
+                IsActive = false,
+                IsSynchronized = true
             };
             
             await _dataContext.Movies.AddAsync(movie);
