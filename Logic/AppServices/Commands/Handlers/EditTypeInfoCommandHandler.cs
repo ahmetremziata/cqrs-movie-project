@@ -1,8 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
-using Logic.Decorators;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Commands.Handlers
@@ -34,6 +35,20 @@ namespace Logic.AppServices.Commands.Handlers
             }
             
             type.Name = command.Name;
+            
+            List<MovieType> movieTypes =
+                await _dataContext.MovieTypes.Where(item => item.TypeId == type.Id).ToListAsync();
+
+            foreach (var movieType in movieTypes)
+            {
+                Movie movie = await _dataContext.Movies.SingleOrDefaultAsync(item => item.Id == movieType.MovieId);
+
+                if (movie != null)
+                {
+                    movie.IsSynchronized = false;
+                }
+            }
+            
             await _dataContext.SaveChangesAsync();
             return Result.Success();
         }

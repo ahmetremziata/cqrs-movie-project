@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Logic.Data.DataContexts;
@@ -41,6 +43,19 @@ namespace Logic.AppServices.Commands.Handlers
             person.BirthPlace = command.BirthPlace;
             person.DeathDate = command.DeathDate;
             person.DeathPlace = command.DeathPlace;
+
+            List<MoviePerson> moviePersons =
+                await _dataContext.MoviePersons.Where(item => item.PersonId == person.Id).ToListAsync();
+
+            foreach (var moviePerson in moviePersons)
+            {
+                Movie movie = await _dataContext.Movies.SingleOrDefaultAsync(item => item.Id == moviePerson.MovieId);
+
+                if (movie != null)
+                {
+                    movie.IsSynchronized = false;
+                }
+            }
             
             await _dataContext.SaveChangesAsync();
             return Result.Success();

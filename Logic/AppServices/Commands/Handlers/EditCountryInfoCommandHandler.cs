@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
@@ -34,6 +35,20 @@ namespace Logic.AppServices.Commands.Handlers
             }
             
             country.Name = command.Name;
+            
+            List<MovieCountry> movieCountries =
+                await _dataContext.MovieCountries.Where(item => item.CountryId == country.Id).ToListAsync();
+
+            foreach (var movieCountry in movieCountries)
+            {
+                Movie movie = await _dataContext.Movies.SingleOrDefaultAsync(item => item.Id == movieCountry.MovieId);
+
+                if (movie != null)
+                {
+                    movie.IsSynchronized = false;
+                }
+            }
+            
             await _dataContext.SaveChangesAsync();
             return Result.Success();
         }
