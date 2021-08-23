@@ -26,7 +26,7 @@ namespace Logic.AppServices.Commands.Handlers
 
             movie.IsSynchronized = false;
             
-            MoviePerson moviePerson =  await _dataContext.MoviePersons.FirstOrDefaultAsync(item => item.Id == command.MovieId 
+            MoviePerson moviePerson =  await _dataContext.MoviePersons.FirstOrDefaultAsync(item => item.MovieId == command.MovieId 
                 && item.PersonId == command.PersonId 
                 && item.RoleId == command.RoleId);
 
