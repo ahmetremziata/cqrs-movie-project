@@ -232,6 +232,7 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
+        [HttpPut("remove/type/{movieId}")]
         public async Task<IActionResult> RemoveTypeFromMovie(int movieId, [FromBody] MovieTypeRequest request)
         {
             var command = new RemoveTypeFromMovieCommand()
