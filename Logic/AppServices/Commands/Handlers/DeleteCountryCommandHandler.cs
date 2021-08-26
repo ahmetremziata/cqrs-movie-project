@@ -29,6 +29,14 @@ namespace Logic.AppServices.Commands.Handlers
 
             List<MovieCountry> movieCountries =
                 await _dataContext.MovieCountries.Where(item => item.CountryId == command.CountryId).ToListAsync();
+            
+            List<int> movieIds = movieCountries.Select(item => item.MovieId).Distinct().ToList();
+
+            foreach (var movieId in movieIds)
+            {
+                Movie movie =  await _dataContext.Movies.SingleOrDefaultAsync(item => item.Id == movieId);
+                movie.IsSynchronized = false;
+            }
 
             foreach (var movieCountry in movieCountries)
             {

@@ -231,6 +231,18 @@ namespace Api.Controllers
             Result result = await _messages.Dispatch(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
+
+        public async Task<IActionResult> RemoveTypeFromMovie(int movieId, [FromBody] MovieTypeRequest request)
+        {
+            var command = new RemoveTypeFromMovieCommand()
+            {
+                MovieId = movieId,
+                TypeId = request.TypeId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
         
         [HttpPut("synchronize/{movieId}")]
         public async Task<IActionResult> SynchronizeMovie(int movieId)
