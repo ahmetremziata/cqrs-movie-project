@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Commands.Handlers
 {
-    public sealed class RemoveActorFromMovieCommandHandler : ICommandHandler<RemoveActorFromMovieCommand>
+    public sealed class RemoveTypeFromMovieCommandHandler : ICommandHandler<RemoveTypeFromMovieCommand>
     {
         private readonly MovieDataContext _dataContext;
         
-        public RemoveActorFromMovieCommandHandler(MovieDataContext dataContext)
+        public RemoveTypeFromMovieCommandHandler(MovieDataContext dataContext)
         {
             _dataContext = dataContext;
         }
         
-        public async Task<Result> Handle(RemoveActorFromMovieCommand command)
+        public async Task<Result> Handle(RemoveTypeFromMovieCommand command)
         {
             Movie movie = await _dataContext.Movies.FirstOrDefaultAsync(item => item.Id == command.MovieId);
             
@@ -24,17 +24,17 @@ namespace Logic.AppServices.Commands.Handlers
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
             
-            MoviePerson moviePerson =  await _dataContext.MoviePersons.FirstOrDefaultAsync(item => item.MovieId == command.MovieId 
-                && item.PersonId == command.PersonId 
-                && item.RoleId == command.RoleId);
+            
+            MovieType movieType =  await _dataContext.MovieTypes.FirstOrDefaultAsync(item => item.MovieId == command.MovieId 
+                && item.TypeId == command.TypeId);
 
-            if (moviePerson == null)
+            if (movieType == null)
             {
-                return Result.Failure($"No person in movie found for movieId: {command.MovieId} personId: {command.PersonId} roleId: {command.RoleId}");
+                return Result.Failure($"No type in movie found for movieId: {command.MovieId} typeId: {command.TypeId}");
             }
             
             movie.IsSynchronized = false;
-            _dataContext.MoviePersons.Remove(moviePerson);
+            _dataContext.MovieTypes.Remove(movieType);
             await _dataContext.SaveChangesAsync();
             return Result.Success();
         }
