@@ -25,9 +25,7 @@ namespace Logic.AppServices.Commands.Handlers
             {
                 return Result.Failure($"No movie found for Id {command.MovieId}");
             }
-
-            movie.IsSynchronized = false;
-
+            
             List<MovieCountry> movieCountries =
                 await _dataContext.MovieCountries.Where(item => item.MovieId == movie.Id).ToListAsync();
 
@@ -43,6 +41,8 @@ namespace Logic.AppServices.Commands.Handlers
                 await _dataContext.MovieCountries.AddAsync(movieCountry);
             }
             
+            movie.IsSynchronized = false;
+
             await _dataContext.SaveChangesAsync();
             return Result.Success();
         }
