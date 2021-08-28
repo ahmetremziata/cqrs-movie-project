@@ -245,6 +245,19 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [HttpPut("remove/country/{movieId}")]
+        public async Task<IActionResult> RemoveCountryFromMovie(int movieId, [FromBody] MovieCountryRequest request)
+        {
+            var command = new RemoveCountryFromMovieCommand()
+            {
+                MovieId = movieId,
+                CountryId = request.CountryId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+        
         [HttpPut("synchronize/{movieId}")]
         public async Task<IActionResult> SynchronizeMovie(int movieId)
         {
