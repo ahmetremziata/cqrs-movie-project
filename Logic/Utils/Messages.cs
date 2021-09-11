@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using Logic.AppServices;
 using Logic.AppServices.Commands;
 using Logic.AppServices.Commands.Handlers;
 using Logic.AppServices.Queries;

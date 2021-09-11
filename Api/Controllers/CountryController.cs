@@ -5,6 +5,7 @@ using Logic.AppServices.Commands;
 using Logic.AppServices.Queries;
 using Logic.Responses;
 using Logic.Utils;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -14,17 +15,19 @@ namespace Api.Controllers
     public sealed class CountryController : BaseController
     {
         private readonly Messages _messages;
+        private readonly IMediator _mediator;
 
-        public CountryController(Messages messages)
+        public CountryController(Messages messages, IMediator mediator)
         {
             _messages = messages;
+            _mediator = mediator;
         }
 
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(List<CountryResponse>))]
         [HttpGet]
         public async  Task<IActionResult> GetCountries()
         {
-            var list = await _messages.Dispatch(new GetCountryListQuery());
+            var list = await _mediator.Send(new GetCountryListQuery());
             return Ok(list);
         }
         
@@ -33,7 +36,7 @@ namespace Api.Controllers
         [HttpGet("{countryId}")]
         public async  Task<IActionResult> GetCountryById(int countryId)
         {
-            var response = await _messages.Dispatch(new GetCountryByIdQuery()
+            var response = await _mediator.Send(new GetCountryByIdQuery()
             {
                 CountryId = countryId
             });

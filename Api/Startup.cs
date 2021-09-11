@@ -15,6 +15,7 @@ using Logic.Data.Repositories.Interfaces;
 using Logic.Decorators;
 using Logic.Responses;
 using Logic.Utils;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +36,7 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(Startup));
             services.AddTransient<IMovieRepository, MovieRepository>();
             /*services.AddTransient<ICommandHandler<EditMovieInfoCommand>>(provider =>
                 new AuditLoggingDecorator<EditMovieInfoCommand>
@@ -70,8 +72,8 @@ namespace Api
             services.AddTransient<IQueryHandler<GetMoviePresentationQuery, Logic.Indexes.Movie>, GetMoviePresentationQueryHandler>();
             services.AddTransient<IQueryHandler<GetTypeListQuery, List<TypeResponse>>, GetTypeListQueryHandler>();
             services.AddTransient<IQueryHandler<GetTypeByIdQuery, TypeResponse>, GetTypeByIdQueryHandler>();
-            services.AddTransient<IQueryHandler<GetCountryListQuery, List<CountryResponse>>, GetCountryListQueryHandler>();
-            services.AddTransient<IQueryHandler<GetCountryByIdQuery, CountryResponse>, GetCountryByIdQueryHandler>();
+            services.AddTransient<IRequestHandler<GetCountryListQuery, List<CountryResponse>>, GetCountryListQueryHandler>();
+            services.AddTransient<IRequestHandler<GetCountryByIdQuery, CountryResponse>, GetCountryByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetPersonListQuery, List<PersonResponse>>, GetPersonListQueryHandler>();
             services.AddTransient<IQueryHandler<GetPersonByIdQuery, PersonDetailResponse>, GetPersonByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetRoleListQuery, List<RoleResponse>>, GetRoleListQueryHandler>();

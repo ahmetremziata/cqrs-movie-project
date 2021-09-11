@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Responses;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Queries.Handlers
 {
-    public sealed class GetCountryListQueryHandler : IQueryHandler<GetCountryListQuery, List<CountryResponse>>
+    public sealed class GetCountryListQueryHandler : IRequestHandler<GetCountryListQuery, List<CountryResponse>>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -17,7 +19,7 @@ namespace Logic.AppServices.Queries.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<List<CountryResponse>> Handle(GetCountryListQuery query)
+        public async Task<List<CountryResponse>> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
         {
             IReadOnlyList<Country> countries = await _dataContext.Countries.ToListAsync();
             List<CountryResponse> dtos = countries.Select(x => ConvertToDto(x)).OrderBy(item => item.Id).ToList();
@@ -32,5 +34,6 @@ namespace Logic.AppServices.Queries.Handlers
                 Name = country.Name
             };
         }
+        
     }
 }

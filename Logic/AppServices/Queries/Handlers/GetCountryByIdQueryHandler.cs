@@ -1,12 +1,14 @@
 using System.Threading.Tasks;
+using System.Threading;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Responses;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Queries.Handlers
 {
-    public sealed class GetCountryByIdQueryHandler : IQueryHandler<GetCountryByIdQuery, CountryResponse>
+    public sealed class GetCountryByIdQueryHandler : IRequestHandler<GetCountryByIdQuery, CountryResponse>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -15,7 +17,7 @@ namespace Logic.AppServices.Queries.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<CountryResponse> Handle(GetCountryByIdQuery query)
+        public async Task<CountryResponse> Handle(GetCountryByIdQuery query, CancellationToken cancellationToken)
         {
             Country country = await _dataContext.Countries.SingleOrDefaultAsync(item => item.Id == query.CountryId);
             if (country == null)
