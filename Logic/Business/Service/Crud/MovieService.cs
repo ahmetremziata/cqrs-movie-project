@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -5,7 +6,9 @@ using CSharpFunctionalExtensions;
 using Logic.Data.DataContexts;
 using Logic.Data.Entities;
 using Logic.Data.Repositories.Interfaces;
+using Logic.Dtos;
 using Logic.Model;
+using Logic.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic.Business.Service.Crud
@@ -55,7 +58,47 @@ namespace Logic.Business.Service.Crud
             _dataContext.SaveChanges();
             return Result.Success();
         }
-        
+
+        public async Task<InsertResult> InsertMovie(CrudMovieModel model)
+        {
+            var existingMovie = await _dataContext.Movies.SingleOrDefaultAsync(item =>
+                item.Name == model.Name && item.OriginalName == model.OriginalName &&
+                item.ConstructionYear == model.ConstructionYear);
+
+            if (existingMovie != null)
+            {
+                return new InsertResult()
+                {
+                    Result = Result.Failure(
+                        $"Movie already found for Name: {model.Name} OriginalName: {model.OriginalName} ConstructionYear: {model.ConstructionYear}")
+                };
+            }
+                
+            Movie movie = new Movie
+            {
+                OriginalName = model.OriginalName,
+                Description = model.Description,
+                Name = model.Name,
+                PosterUrl = model.PosterUrl,
+                TotalMinute = model.TotalMinute,
+                VisionEntryDate = model.VisionEntryDate,
+                ConstructionYear = model.ConstructionYear,
+                CreatedOn = DateTime.Now,
+                IsActive = false,
+                IsSynchronized = true
+            };
+            
+            await _dataContext.Movies.AddAsync(movie);
+            await _dataContext.SaveChangesAsync();
+            return new InsertResult()
+            {
+                Result = Result.Success(), InsertResponse = new InsertResponse()
+                {
+                    Id = movie.Id
+                }
+            };
+        }
+
         private CrudMovieModel ConvertToDto(Movie movie)
         {
             return new CrudMovieModel

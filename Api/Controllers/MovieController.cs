@@ -7,7 +7,6 @@ using Logic.AppServices.Commands.Handlers;
 using Logic.AppServices.Queries;
 using Logic.Business.Service.Crud;
 using Logic.Data.DataContexts;
-using Logic.Data.Repositories.Interfaces;
 using Logic.Dtos;
 using Logic.Model;
 using Logic.Requests;
@@ -22,22 +21,44 @@ namespace Api.Controllers
     [Route("api/movies")]
     public sealed class MovieController : BaseController
     {
-        private readonly IMovieRepository _movieRepository;
         private readonly MovieDataContext _dataContext;
         private readonly IMovieService _movieService;
         private readonly Messages _messages;
         private readonly IMediator _mediator;
 
-        public MovieController(IMovieRepository movieRepository, MovieDataContext dataContext, Messages messages, IMediator mediator, IMovieService movieService)
+        public MovieController(MovieDataContext dataContext, Messages messages, IMediator mediator, IMovieService movieService)
         {
-            _movieRepository = movieRepository;
             _dataContext = dataContext;
             _messages = messages;
             _mediator = mediator;
             _movieService = movieService;
         }
         
-         //Without cqrs
+        [HttpGet("without-cqrs")]
+        public async  Task<IActionResult> GetListWithoutCqrs()
+        {
+            List<CrudMovieModel> response = await _movieService.GetMovies();
+            return Ok(response);
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(InsertResponse))]
+        [HttpPost("without-cqrs")]
+        public async Task<IActionResult> InsertMovieWithoutCqrs( [FromBody] InsertMovieInfoRequest infoRequest)
+        {
+            InsertResult result = await _movieService.InsertMovie(new CrudMovieModel()
+            {
+                Name = infoRequest.Name,
+                OriginalName = infoRequest.OriginalName,
+                ConstructionYear = infoRequest.ConstructionYear,
+                Description = infoRequest.Description,
+                PosterUrl = infoRequest.PosterUrl,
+                TotalMinute = infoRequest.TotalMinute,
+                VisionEntryDate = infoRequest.VisionEntryDate
+            });
+            
+            return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);
+        }
+        
         [SwaggerResponse((int)HttpStatusCode.OK)]
         [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpPut("without-cqrs/{id}")]
@@ -98,13 +119,6 @@ namespace Api.Controllers
             Result result = await _mediator.Send(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
             #endregion
-        }
-        
-        [HttpGet("without-cqrs")]
-        public async  Task<IActionResult> GetListWithoutCqrs()
-        {
-            List<CrudMovieModel> response = await _movieService.GetMovies();
-            return Ok(response);
         }
 
         [HttpGet]
