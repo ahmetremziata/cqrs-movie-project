@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Queries.Handlers
 {
-    public sealed class GetCountryByIdQueryHandler : IRequestHandler<GetCountryByIdQuery, CountryResponse>
+    public sealed class GetCountryByIdQueryHandler : IQueryHandler<GetCountryByIdQuery, CountryResponse>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -17,7 +17,7 @@ namespace Logic.AppServices.Queries.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<CountryResponse> Handle(GetCountryByIdQuery query, CancellationToken cancellationToken)
+        public async Task<CountryResponse> Handle(GetCountryByIdQuery query)
         {
             Country country = await _dataContext.Countries.SingleOrDefaultAsync(item => item.Id == query.CountryId);
             if (country == null)

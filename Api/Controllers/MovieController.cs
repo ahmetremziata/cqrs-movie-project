@@ -13,7 +13,9 @@ using Logic.Dtos;
 using Logic.Requests;
 using Logic.Responses;
 using Logic.Utils;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
@@ -24,12 +26,14 @@ namespace Api.Controllers
         private readonly IMovieRepository _movieRepository;
         private readonly MovieDataContext _dataContext;
         private readonly Messages _messages;
+        private readonly IMediator _mediator;
 
-        public MovieController(IMovieRepository movieRepository, MovieDataContext dataContext, Messages messages)
+        public MovieController(IMovieRepository movieRepository, MovieDataContext dataContext, Messages messages, IMediator mediator)
         {
             _movieRepository = movieRepository;
             _dataContext = dataContext;
             _messages = messages;
+            _mediator = mediator;
         }
         
         [HttpGet("without-handler")]
@@ -85,7 +89,9 @@ namespace Api.Controllers
             return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);
         }
         
-        //Old code
+        //Without handler
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpPut("without-handler/{id}")]
         public async Task<IActionResult> EditMovieWithoutHandler(int id, [FromBody] EditMovieInfoRequest infoRequest)
         {
@@ -94,6 +100,16 @@ namespace Api.Controllers
             {
                 return Error($"No movie found for Id {id}");
             }
+            
+            var existingMovie = await _dataContext.Movies.SingleOrDefaultAsync(item =>
+                item.Name == infoRequest.Name && item.OriginalName == infoRequest.OriginalName && item.Id != id);
+
+            if (existingMovie != null)
+            {
+                return Error(
+                    $"Movie already found for Name: {infoRequest.Name} OriginalName: {infoRequest.OriginalName}");
+            } 
+            
             movie.OriginalName = infoRequest.OriginalName;
             movie.Description = infoRequest.Description;
             movie.Name = infoRequest.Name;
@@ -105,43 +121,45 @@ namespace Api.Controllers
             return Ok();
         }
         
-        //Old code
+        //With handler
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpPut("with-handler/{id}")]
         public async Task<IActionResult> EditMovieWithHandler(int id, [FromBody] EditMovieInfoRequest infoRequest)
         {
-            var command = new EditMovieInfoCommand()
-            {
-                Name = infoRequest.Name,
-                OriginalName = infoRequest.OriginalName,
-                ConstructionYear = infoRequest.ConstructionYear,
-                Description = infoRequest.Description,
-                PosterUrl = infoRequest.PosterUrl,
-                TotalMinute = infoRequest.TotalMinute,
-                VisionEntryDate = infoRequest.VisionEntryDate,
-                Id = id
-            };
+            var command = new EditMovieInfoCommand(id, infoRequest.Name, infoRequest.OriginalName,
+                infoRequest.Description, infoRequest.ConstructionYear, infoRequest.TotalMinute, infoRequest.PosterUrl,
+                infoRequest.VisionEntryDate);
             var handler = new EditMovieInfoCommandHandler(_dataContext);
             Result result = await handler.Handle(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditMovie(int id, [FromBody] EditMovieInfoRequest infoRequest)
+        //With mediator pattern
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpPut("with-mediator-pattern/{id}")]
+        public async Task<IActionResult> EditMovieWithMediatorPattern(int id, [FromBody] EditMovieInfoRequest infoRequest)
         {
             #region "With messages"
-            var command = new EditMovieInfoCommand()
-            {
-                Name = infoRequest.Name,
-                OriginalName = infoRequest.OriginalName,
-                ConstructionYear = infoRequest.ConstructionYear,
-                Description = infoRequest.Description,
-                PosterUrl = infoRequest.PosterUrl,
-                TotalMinute = infoRequest.TotalMinute,
-                VisionEntryDate = infoRequest.VisionEntryDate,
-                Id = id
-                
-            };
+            var command = new EditMovieInfoCommand(id, infoRequest.Name, infoRequest.OriginalName,
+                infoRequest.Description, infoRequest.ConstructionYear, infoRequest.TotalMinute, infoRequest.PosterUrl,
+                infoRequest.VisionEntryDate);
             Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+            #endregion
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpPut("with-mediatr/{id}")]
+        public async Task<IActionResult> EditMovieWithMediatr(int id, [FromBody] EditMovieInfoRequest infoRequest)
+        {
+            #region "With messages"
+            var command = new EditMovieInfoCommandWithMediatr(id, infoRequest.Name, infoRequest.OriginalName,
+                infoRequest.Description, infoRequest.ConstructionYear, infoRequest.TotalMinute, infoRequest.PosterUrl,
+                infoRequest.VisionEntryDate);
+            Result result = await _mediator.Send(command);
             return result.IsSuccess ? Ok() : Error(result.Error);
             #endregion
         }

@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
-using Logic.Responses;
+using CSharpFunctionalExtensions;
+using MediatR;
 
 namespace Logic.AppServices.Commands
 {
-    public sealed class EditMovieInfoCommand : ICommand
+    public sealed class EditMovieInfoCommandWithMediatr : IRequest<Result>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,7 @@ namespace Logic.AppServices.Commands
         public string PosterUrl { get; set; }
         public DateTime? VisionEntryDate { get; set; }
         
-        public EditMovieInfoCommand(int id, 
+        public EditMovieInfoCommandWithMediatr(int id, 
             string name, 
             string originalName, 
             string description, 

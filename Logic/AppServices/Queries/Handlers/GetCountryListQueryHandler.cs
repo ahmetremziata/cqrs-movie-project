@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logic.AppServices.Queries.Handlers
 {
-    public sealed class GetCountryListQueryHandler : IRequestHandler<GetCountryListQuery, List<CountryResponse>>
+    public sealed class GetCountryListQueryHandler : IQueryHandler<GetCountryListQuery, List<CountryResponse>>
     {
         private readonly MovieDataContext _dataContext;
 
@@ -19,7 +19,7 @@ namespace Logic.AppServices.Queries.Handlers
             _dataContext = dataContext;
         }
         
-        public async Task<List<CountryResponse>> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
+        public async Task<List<CountryResponse>> Handle(GetCountryListQuery request)
         {
             IReadOnlyList<Country> countries = await _dataContext.Countries.ToListAsync();
             List<CountryResponse> dtos = countries.Select(x => ConvertToDto(x)).OrderBy(item => item.Id).ToList();
