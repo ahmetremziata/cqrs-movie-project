@@ -7,6 +7,7 @@ using Logic.AppServices.Commands;
 using Logic.AppServices.Commands.Handlers;
 using Logic.AppServices.Queries;
 using Logic.AppServices.Queries.Handlers;
+using Logic.Business.Service.Crud;
 using Logic.Business.Service.Kafka;
 using Logic.Business.Service.Kafka.Interfaces;
 using Logic.Data.DataContexts;
@@ -38,6 +39,7 @@ namespace Api
         {
             services.AddMediatR(typeof(Startup));
             services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IMovieService, MovieService>();
             /*services.AddTransient<ICommandHandler<EditMovieInfoCommand>>(provider =>
                 new AuditLoggingDecorator<EditMovieInfoCommand>
                     (new EditMovieInfoCommandHandler(provider.GetService<MovieDataContext>())));*/
