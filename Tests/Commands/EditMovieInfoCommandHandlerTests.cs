@@ -68,7 +68,7 @@ namespace TestProject1.Commands
             result.IsFailure.Should().BeFalse();
         }
         
-                [Test]
+        [Test]
         public async Task Handler_ThatAnotherMovieWithSameNameExists_ReturnsResultFailureWithAnotherMovieMessage()
         {
             //Arrange
