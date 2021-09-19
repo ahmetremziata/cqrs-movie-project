@@ -34,6 +34,7 @@ namespace Logic.AppServices.Commands.Handlers
             }
             
             movie.IsSynchronized = false;
+            
             MoviePerson newMoviePerson = new MoviePerson
             {
                 MovieId = command.MovieId, 
