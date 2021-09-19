@@ -251,6 +251,20 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
+        [HttpPut("insert/actor/{movieId}")]
+        public async Task<IActionResult> InsertActorToMovie(int movieId, [FromBody] MoviePersonRequest request)
+        {
+            var command = new InsertActorToMovieCommand()
+            {
+                MovieId = movieId,
+                PersonId = request.PersonId,
+                RoleId = request.RoleId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+
         [HttpPut("remove/type/{movieId}")]
         public async Task<IActionResult> RemoveTypeFromMovie(int movieId, [FromBody] MovieTypeRequest request)
         {
