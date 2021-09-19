@@ -86,7 +86,8 @@ namespace Logic.AppServices.Queries.Handlers
             result.IsActive = firstMovie.is_active;
             result.Types = await GetTypes(movies);
             result.Countries = await GetCountries(movies);
-            result.Team = await GetTeam(movies);
+            var team = await GetTeam(movies);
+            result.Team = team.OrderBy(item => item.RoleId).ToList();
             return result;
         }
         
