@@ -108,7 +108,7 @@ namespace Api.Controllers
         
         //With mediator pattern (mediatr package)
         [SwaggerResponse((int)HttpStatusCode.OK)]
-        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         [HttpPut("with-mediatr/{id}")]
         public async Task<IActionResult> EditMovieWithMediatr(int id, [FromBody] EditMovieInfoRequest infoRequest)
         {
@@ -166,6 +166,8 @@ namespace Api.Controllers
             return result.Result.IsSuccess ? Ok(result.InsertResponse) : Error(result.Result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
@@ -174,6 +176,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("upsert-person/{movieId}")]
         public async Task<IActionResult> UpsertPersonToMovie(int movieId, [FromBody] UpsertPersonToMovieRequest request)
         {
@@ -187,6 +191,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("upsert-country/{movieId}")]
         public async Task<IActionResult> UpsertCountryToMovie(int movieId, [FromBody] UpsertCountryToMovieRequest request)
         {
@@ -200,6 +206,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("upsert-type/{movieId}")]
         public async Task<IActionResult> UpsertTypeToMovie(int movieId, [FromBody] UpsertTypeToMovieRequest request)
         {
@@ -213,6 +221,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("activate/{movieId}")]
         public async Task<IActionResult> ActivateMovie(int movieId)
         {
@@ -225,6 +235,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("deactivate/{movieId}")]
         public async Task<IActionResult> DeactivateMovie(int movieId)
         {
@@ -237,6 +249,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("remove/actor/{movieId}")]
         public async Task<IActionResult> RemoveActorFromMovie(int movieId, [FromBody] MoviePersonRequest request)
         {
@@ -251,6 +265,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("insert/actor/{movieId}")]
         public async Task<IActionResult> InsertActorToMovie(int movieId, [FromBody] MoviePersonRequest request)
         {
@@ -265,6 +281,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
 
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("remove/type/{movieId}")]
         public async Task<IActionResult> RemoveTypeFromMovie(int movieId, [FromBody] MovieTypeRequest request)
         {
@@ -278,6 +296,23 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
+        [HttpPut("insert/type/{movieId}")]
+        public async Task<IActionResult> InsertTypeToMovie(int movieId, [FromBody] MovieTypeRequest request)
+        {
+            var command = new InsertTypeToMovieCommand()
+            {
+                MovieId = movieId,
+                TypeId = request.TypeId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("remove/country/{movieId}")]
         public async Task<IActionResult> RemoveCountryFromMovie(int movieId, [FromBody] MovieCountryRequest request)
         {
@@ -291,6 +326,8 @@ namespace Api.Controllers
             return result.IsSuccess ? Ok() : Error(result.Error);
         }
         
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("synchronize/{movieId}")]
         public async Task<IActionResult> SynchronizeMovie(int movieId)
         {

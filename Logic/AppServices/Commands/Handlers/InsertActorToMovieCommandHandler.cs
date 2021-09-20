@@ -30,7 +30,7 @@ namespace Logic.AppServices.Commands.Handlers
 
             if (moviePerson != null)
             {
-                return Result.Failure($"Person with movieId: {command.MovieId} personId: {command.PersonId} roleId: {command.RoleId} already exist so it cannot be added");
+                return Result.Failure($"Person with movieId: {command.MovieId} personId: {command.PersonId} roleId: {command.RoleId} already exists so it cannot be added");
             }
             
             movie.IsSynchronized = false;
