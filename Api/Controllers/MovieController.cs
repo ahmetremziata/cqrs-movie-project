@@ -328,6 +328,21 @@ namespace Api.Controllers
         
         [SwaggerResponse((int)HttpStatusCode.OK)]
         [SwaggerResponse((int)HttpStatusCode.BadRequest)]
+        [HttpPut("insert/country/{movieId}")]
+        public async Task<IActionResult> InsertCountryToMovie(int movieId, [FromBody] MovieCountryRequest request)
+        {
+            var command = new InsertCountryToMovieCommand()
+            {
+                MovieId = movieId,
+                CountryId = request.CountryId
+            };
+            
+            Result result = await _messages.Dispatch(command);
+            return result.IsSuccess ? Ok() : Error(result.Error);
+        }
+        
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
         [HttpPut("synchronize/{movieId}")]
         public async Task<IActionResult> SynchronizeMovie(int movieId)
         {
