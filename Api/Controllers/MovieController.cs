@@ -128,7 +128,24 @@ namespace Api.Controllers
             return Ok(list);
         }
         
-        
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(List<MovieResponse>))]
+        [SwaggerResponse((int)HttpStatusCode.NotFound)]
+        [HttpGet("search-by-filter")]
+        public async  Task<IActionResult> GetListByFilter(SearchAdminMovieRequest request)
+        {
+            var list = await _messages.Dispatch(new GetMovieListByFilterQuery()
+            {
+                MovieName = request.MovieName,
+                ActorName = request.ActorName,
+                ConstructionYear = request.ConstructionYear,
+                CountryId = request.CountryId,
+                TypeId = request.TypeId,
+                IsDomestic = request.IsDomestic,
+                IsInternational = request.IsInternational
+            });
+            return Ok(list);
+        }
+
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(MovieDetailResponse))]
         [SwaggerResponse((int)HttpStatusCode.NotFound)]
         [HttpGet("{movieId}")]

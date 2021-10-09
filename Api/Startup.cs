@@ -82,6 +82,7 @@ namespace Api
             services.AddTransient<IQueryHandler<GetPersonListQuery, List<PersonResponse>>, GetPersonListQueryHandler>();
             services.AddTransient<IQueryHandler<GetPersonByIdQuery, PersonDetailResponse>, GetPersonByIdQueryHandler>();
             services.AddTransient<IQueryHandler<GetRoleListQuery, List<RoleResponse>>, GetRoleListQueryHandler>();
+            services.AddTransient<IQueryHandler<GetMovieListByFilterQuery, List<MovieResponse>>, GetMovieListByFilterQueryHandler>();
             services.AddSingleton<Messages>();
             services.AddTransient<IProducerService, ProducerService>();
             
