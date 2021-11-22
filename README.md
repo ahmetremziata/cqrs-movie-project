@@ -2,7 +2,7 @@
 This project provides a simple movie api using cqrs and event sourcing. With this api, you can create new movie and new actor, update a movie or actor and delete movie or actor and moreover. It is written with c# programming language and .net5 technology.
 
 ## Dependencies
-- Postgre (Datasource for command)
+- Postgre (Datasource for command or query)
 - Kafka (For event sourcing)
 - ElasticSearch (Nosql for query)
 
