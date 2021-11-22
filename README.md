@@ -1,5 +1,5 @@
 # cqrs-movie-api
-An api example for cqrs and event sourcing
+This project provides a simple movie api using cqrs and event sourcing. With this api, you can create new movie and new actor, update a movie or actor and delete movie or actor and esp.
 
 ## Dependencies
 - Postgre (Datasource for command)
