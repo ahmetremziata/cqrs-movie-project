@@ -291,7 +291,8 @@ namespace Api.Controllers
             {
                 MovieId = movieId,
                 PersonId = request.PersonId,
-                RoleId = request.RoleId
+                RoleId = request.RoleId,
+                CharacterName =  request.CharacterName
             };
             
             Result result = await _messages.Dispatch(command);
