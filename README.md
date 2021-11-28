@@ -27,7 +27,12 @@ First of all you should standup below dependencies;
   }
 ```
 - elasticsearch in localhost:9200 (Download local or run with docker)
-- Run tables initialize scripts on table_initialize.sql file on local postgres database
+
+After dependencies are active, then for sample data you can run table_initialize.sql file on local postgres database.
+
+## Run on local
+You can run up api with your favorite ide (i advice jetbrains) after dependencies has stand up.
+After running project, you can try with http://localhost:8080/index.html link
 
 
 
