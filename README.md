@@ -32,7 +32,7 @@ After dependencies are active, then for sample data you can run table_initialize
 
 ## Run on local
 You can run up api with your favorite ide (i advice jetbrains) after dependencies has stand up.
-After running project, you can try with http://localhost:8080/index.html link
+After running project, you can try with http://localhost:8080/index.html swagger link or you can try postman or insomnia
 
 
 
